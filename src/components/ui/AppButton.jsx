@@ -1,13 +1,16 @@
+/* eslint-disable react/prop-types */
 import { Button } from "@mui/material";
 
-function AppButton({ children, fontSize = "16px", onClick }) {
+function AppButton({ children, onClick, ...rest }) {
   return (
     <Button
+      {...rest}
       onClick={() => onClick?.()}
       sx={{
-        px: "25px",
-        py: "10px",
-        fontSize: fontSize,
+        p: "5px",
+        px: "30px",
+        // borderRadius: 3,
+        fontSize: "16px",
         bgcolor: "#1cc182",
         color: "white",
         ":hover": {

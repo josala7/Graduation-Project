@@ -1,6 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import AppButton from "./AppButton";
 import { useNavigate } from "react-router-dom";
+import { error } from "../../assets";
 
 function ErrorFallback() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function ErrorFallback() {
       alignItems={"center"}
       spacing={5}
     >
-      <img src="/src/assets/404.svg" alt="errorFullback" width={300} />
+      <img src={error} alt="errorFullback" width={300} />
       <Typography variant="h3" sx={{ fontWeight: "500" }}>
         للأسف حدث خطأ
       </Typography>

@@ -3,7 +3,7 @@ import { MdHome, MdProductionQuantityLimits } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 import { BsBoxSeamFill } from "react-icons/bs";
 import { FaUserCheck } from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { appStyle } from "../../../styleConfig";
 import { FaCaretDown } from "react-icons/fa";
 import { useState } from "react";
