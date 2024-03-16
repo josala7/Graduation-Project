@@ -80,6 +80,11 @@ function SideMenu() {
               key={item.label}
               component={NavLink}
               to={item.url}
+              onClick={
+                item?.children?.length > 0
+                  ? () => setShowSubMenu((cur) => !cur)
+                  : {}
+              }
               sx={{
                 "&.active": {
                   bgcolor: "#241b5a",
@@ -108,7 +113,6 @@ function SideMenu() {
 
               {item?.children?.length > 0 && (
                 <Box
-                  onClick={() => setShowSubMenu((cur) => !cur)}
                   sx={{
                     cursor: "pointer",
                   }}

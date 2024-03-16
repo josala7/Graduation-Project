@@ -9,11 +9,16 @@ import Signup from "./features/auth/Signup";
 import Settings from "./features/pages/Settings";
 import Distributors from "./features/pages/Distributors";
 import Orders from "./features/pages/Orders";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: (
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "/products",

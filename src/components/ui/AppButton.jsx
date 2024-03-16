@@ -9,7 +9,7 @@ function AppButton({ children, onClick, ...rest }) {
       sx={{
         p: "5px",
         px: "30px",
-        // borderRadius: 3,
+        borderRadius: 2,
         fontSize: "16px",
         bgcolor: "#1cc182",
         color: "white",
