@@ -8,20 +8,20 @@ function ProtectedRoute({ children }) {
 
   // 1. load the auth user
   // const { isLoading, isAuth } = useUser();
-  const isAuth = true;
-  const isLoading = false;
+  const isAuth = localStorage.getItem("token") ? true : false;
+  // const isLoading = false;
 
   // 2. if there is No Auth, redirect to '/login'
   useEffect(
     function () {
-      if (!isAuth && !isLoading) {
+      if (!isAuth) {
         navigate("/login", { replace: true });
       }
     },
-    [isAuth, isLoading, navigate]
+    [isAuth, navigate]
   );
   // 3. spinner when isLoading
-  if (isLoading) return <div>loading...</div>;
+  // if (isLoading) return <div>loading...</div>;
   // 4. return the entire app
   if (isAuth) return children;
 }

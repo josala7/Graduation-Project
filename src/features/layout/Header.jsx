@@ -7,8 +7,15 @@ import {
   Typography,
 } from "@mui/material";
 import { RiLogoutCircleLine } from "react-icons/ri";
+import { apiLogout } from "../../services/apiAuth";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
+  const logout = () => {
+    apiLogout();
+    navigate("/login");
+  };
   return (
     <Stack
       direction={"flex"}
@@ -19,7 +26,7 @@ function Header() {
     >
       <Stack direction={"flex"} gap={2}>
         <IconButton sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <Avatar alt="Mahmoud" src="/static/images/avatar/2.jpg" />
         </IconButton>
 
         <Stack>
@@ -39,6 +46,7 @@ function Header() {
             justifyContent: "center",
             alignItems: "center",
           }}
+          onClick={logout}
         >
           <RiLogoutCircleLine fontSize={20} color="#9c1818" />
         </Box>

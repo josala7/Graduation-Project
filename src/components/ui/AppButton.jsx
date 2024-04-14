@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 
-function AppButton({ children, onClick, ...rest }) {
+function AppButton({ children, onClick, isLoading, ...rest }) {
   return (
     <Button
       {...rest}
       onClick={() => onClick?.()}
       sx={{
-        p: "5px",
+        p: isLoading ? "20px" : "5px",
         px: "30px",
         borderRadius: 2,
         fontSize: "16px",
@@ -18,7 +18,7 @@ function AppButton({ children, onClick, ...rest }) {
         },
       }}
     >
-      {children}
+      {isLoading ? <CircularProgress size="30px" /> : children}
     </Button>
   );
 }

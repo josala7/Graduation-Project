@@ -1,11 +1,32 @@
-import { Box, Breadcrumbs } from "@mui/material";
+import { Box, Breadcrumbs, Stack } from "@mui/material";
+import AppButton from "./AppButton";
 
-function AppBreadcrumps({ breadcrumbs }) {
+function AppBreadcrumps({
+  breadcrumbs,
+  addButton = false,
+  addButtonText,
+  onAddButtonClick,
+}) {
   return (
-    <Box p={2} bgcolor={"#f2f2f2"} borderRadius={3}>
+    <Box
+      p={2}
+      bgcolor={"#f2f2f2"}
+      borderRadius={3}
+      display={"flex"}
+      justifyContent={"space-between"}
+      alignItems={"center"}
+    >
       <Breadcrumbs separator="›" aria-label="breadcrumb">
         {breadcrumbs}
       </Breadcrumbs>
+
+      <Stack direction={"flex"} spacing={2}>
+        {addButton && (
+          <AppButton onClick={onAddButtonClick}>
+            {addButtonText ? addButtonText : "اٍضافة"}
+          </AppButton>
+        )}
+      </Stack>
     </Box>
   );
 }

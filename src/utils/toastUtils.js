@@ -1,8 +1,7 @@
-
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 export const successToast = (message) => {
-  toast.success(message,  {
+  toast.success(message, {
     position: "top-right",
     autoClose: 3000,
     hideProgressBar: false,
@@ -11,12 +10,13 @@ export const successToast = (message) => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    transition: Bounce,
-    });
+
+    // transition: Bounce,
+  });
 };
 
 export const errorToast = (message) => {
-  toast.error(message,  {
+  toast.error(message, {
     position: "top-right",
     autoClose: 3000,
     hideProgressBar: false,
@@ -25,8 +25,8 @@ export const errorToast = (message) => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    transition: Bounce,
-    });
+    // transition: Bounce,
+  });
 };
 
 export const infoToast = (message) => {
@@ -39,8 +39,8 @@ export const infoToast = (message) => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    transition: Bounce,
-    });
+    // transition: Bounce,
+  });
 };
 
 export const warningToast = (message) => {
@@ -53,6 +53,6 @@ export const warningToast = (message) => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    transition: Bounce,
-    });
+    // transition: Bounce,
+  });
 };

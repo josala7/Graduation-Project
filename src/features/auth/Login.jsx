@@ -3,12 +3,17 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import AppButton from "../../components/ui/AppButton";
 import InputControl from "../../components/ui/form-elements/InputControl";
-import { login } from "../../assets";
+import { login as loginImg } from "../../assets";
 import { Link } from "react-router-dom";
+import { apiLogin } from "../../services/apiAuth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+
+import { errorToast } from "../../utils/toastUtils";
 
 const initialValues = {
-  email: "",
-  password: "",
+  email: "gory@gmail.com",
+  password: "P@ssw0rd",
 };
 
 const validationSchema = Yup.object({
@@ -21,11 +26,30 @@ const validationSchema = Yup.object({
     .min(6, "يجب أن تحتوي كلمة السر على 6 أحرف على الأقل"),
 });
 
-const onSubmit = (values) => {
-  console.log(values, "values");
-};
-
 function Login() {
+  const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+
+  const { mutate: login, isLoading } = useMutation({
+    mutationFn: (body) => apiLogin(body),
+    onSuccess: () => {
+      navigate("/");
+      queryClient.setQueryData(["user"], data.user);
+    },
+    onError: (err) => {
+      errorToast(err.response.data.err);
+    },
+  });
+
+  const onSubmit = async (values) => {
+    try {
+      login(values);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -67,7 +91,8 @@ function Login() {
 
                 <AppButton
                   type="submit"
-                  disabled={formik.isSubmitting}
+                  disabled={isLoading}
+                  isLoading={isLoading}
                   fullWidth
                 >
                   تسجيل الدخول
@@ -131,7 +156,7 @@ function Login() {
           }}
           position="relative"
         >
-          <img src={login} alt="login image" />
+          <img src={loginImg} alt="login image" />
         </Box>
       </Stack>
     </Box>

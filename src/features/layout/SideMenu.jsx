@@ -6,7 +6,7 @@ import { FaUserCheck } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { appStyle } from "../../../styleConfig";
 import { FaCaretDown } from "react-icons/fa";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const MenuItem = [
   {
@@ -31,7 +31,7 @@ const MenuItem = [
   },
   {
     label: "الاٍعدادات",
-    url: "/settings",
+    url: null,
     icon: <IoSettingsSharp fontSize={"20px"} />,
     children: [
       {
@@ -44,7 +44,12 @@ const MenuItem = [
 ];
 
 function SideMenu() {
-  const [showSubMenu, setShowSubMenu] = useState(false);
+  const [showSubMenuIndex, setShowSubMenuIndex] = useState(null);
+
+  const toggleSubMenu = (index) => {
+    setShowSubMenuIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+
   return (
     <Drawer
       anchor="right"
@@ -74,17 +79,12 @@ function SideMenu() {
           gap: 0.5,
         }}
       >
-        {MenuItem.map((item) => (
-          <>
+        {MenuItem.map((item, index) => (
+          <React.Fragment key={index}>
             <ListItem
-              key={item.label}
               component={NavLink}
               to={item.url}
-              onClick={
-                item?.children?.length > 0
-                  ? () => setShowSubMenu((cur) => !cur)
-                  : {}
-              }
+              onClick={() => toggleSubMenu(index)}
               sx={{
                 "&.active": {
                   bgcolor: "#241b5a",
@@ -92,7 +92,7 @@ function SideMenu() {
                 cursor: "pointer",
                 display: "flex",
                 justifyContent: "space-between",
-                alignItems: " center",
+                alignItems: "center",
                 borderRadius: "6px",
                 color: "white",
                 ":hover": {
@@ -104,33 +104,29 @@ function SideMenu() {
                 sx={{
                   display: "flex",
                   gap: 2,
-                  alignItems: " center",
+                  alignItems: "center",
                 }}
               >
                 {item.icon}
                 {item.label}
               </Box>
 
-              {item?.children?.length > 0 && (
-                <Box
-                  sx={{
-                    cursor: "pointer",
-                  }}
-                >
+              {item.children?.length > 0 && (
+                <Box sx={{ cursor: "pointer" }}>
                   <FaCaretDown />
                 </Box>
               )}
             </ListItem>
 
-            {item?.children?.map((subItem) => (
-              <Collapse
-                key={subItem.label}
-                in={showSubMenu}
-                timeout="auto"
-                unmountOnExit
-              >
-                <List disablePadding>
+            <Collapse
+              in={showSubMenuIndex === index}
+              timeout="auto"
+              unmountOnExit
+            >
+              <List disablePadding>
+                {item.children?.map((subItem, subIndex) => (
                   <ListItem
+                    key={subIndex}
                     component={NavLink}
                     to={subItem.url}
                     sx={{
@@ -140,7 +136,7 @@ function SideMenu() {
                       cursor: "pointer",
                       display: "flex",
                       justifyContent: "space-between",
-                      alignItems: " center",
+                      alignItems: "center",
                       borderRadius: "6px",
                       color: "white",
                       ":hover": {
@@ -154,10 +150,10 @@ function SideMenu() {
                     {subItem.icon}
                     {subItem.label}
                   </ListItem>
-                </List>
-              </Collapse>
-            ))}
-          </>
+                ))}
+              </List>
+            </Collapse>
+          </React.Fragment>
         ))}
       </List>
     </Drawer>

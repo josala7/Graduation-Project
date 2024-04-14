@@ -10,6 +10,9 @@ import Settings from "./features/pages/Settings";
 import Distributors from "./features/pages/Distributors";
 import Orders from "./features/pages/Orders";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ProductDetails from "./features/products/ProductDetails";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
@@ -21,20 +24,24 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/products",
+        path: "products",
         element: <Products />,
       },
       {
-        path: "/distributors",
+        path: "distributors",
         element: <Distributors />,
       },
       {
-        path: "/orders",
+        path: "orders",
         element: <Orders />,
       },
       {
-        path: "/settings",
+        path: "settings",
         element: <Settings />,
+      },
+      {
+        path: "/products/:productId",
+        element: <ProductDetails />,
       },
     ],
   },
@@ -57,6 +64,7 @@ function App() {
     <>
       <CssBaseline />
       <RouterProvider router={router} />
+      <ToastContainer />
     </>
   );
 }

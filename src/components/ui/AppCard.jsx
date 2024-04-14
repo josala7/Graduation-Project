@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Card,
@@ -9,8 +10,12 @@ import {
 } from "@mui/material";
 import { product1 } from "../../assets";
 import AppButton from "./AppButton";
+import { useNavigate } from "react-router-dom";
 
-function AppCard() {
+function AppCard({ item }) {
+  const { _id: productId, title, price, imageCover } = item;
+
+  const navigate = useNavigate();
   return (
     <Card
       component={Stack}
@@ -27,19 +32,23 @@ function AppCard() {
         component="img"
         alt="green iguana"
         height="250"
-        image={product1}
+        image={imageCover}
       />
 
-      <Stack pt={3} pb={1} spacing={1.5}>
+      <Stack pt={3} pb={1} spacing={2}>
         <Typography variant="body1" fontWeight={"bold"}>
-          اسم المنتج
+          {title}
         </Typography>
 
-        <Rating name="rating" defaultValue={3} precision={1} />
+        {/* <Rating dir="ltr" name="rating" defaultValue={3} precision={1} /> */}
 
-        <Typography variant="body1">99 جنيها</Typography>
+        <Typography variant="body1">{price} جنيها</Typography>
 
-        <AppButton>عرض التفاصيل</AppButton>
+        <AppButton
+          onClick={() => navigate(`/products/${productId}`, { state: item })}
+        >
+          عرض التفاصيل
+        </AppButton>
       </Stack>
     </Card>
   );
