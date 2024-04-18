@@ -31,12 +31,12 @@ const MenuItem = [
   },
   {
     label: "الاٍعدادات",
-    url: null,
+    url: "/settings/products",
     icon: <IoSettingsSharp fontSize={"20px"} />,
     children: [
       {
-        label: "اٍعدادات الههه",
-        url: "/s",
+        label: "اٍعدادات المنتجات",
+        url: "/settings/products",
         icon: <IoSettingsSharp fontSize={"20px"} />,
       },
     ],

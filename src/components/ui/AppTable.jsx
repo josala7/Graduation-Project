@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import { Box } from "@mui/material";
 import DataTable from "react-data-table-component";
+import { noData } from "../../assets";
 
-function AppTable({ data, columns }) {
+function AppTable({ data, columns, isLoading }) {
   const customStyles = {
     rows: {
       style: {
@@ -10,6 +12,7 @@ function AppTable({ data, columns }) {
     },
     headCells: {
       style: {
+        backgroundColor: "#e0e0e0",
         fontSize: "17px",
         paddingLeft: "8px", // override the cell padding for head cells
         paddingRight: "8px",
@@ -26,16 +29,20 @@ function AppTable({ data, columns }) {
   };
   return (
     <Box>
-      <DataTable
-        columns={columns}
-        data={data}
-        customStyles={customStyles}
-        noDataComponent={<div>يلايهبالهخبيالهيبى</div>}
-        highlightOnHover={true}
-        sortServer={false}
-        fixedHeader
-        striped={true}
-      />
+      {isLoading ? (
+        <div>loading....</div>
+      ) : (
+        <DataTable
+          columns={columns}
+          data={data}
+          customStyles={customStyles}
+          noDataComponent={<img src={noData} alt="noData" width={"350px"} />}
+          highlightOnHover={true}
+          sortServer={false}
+          fixedHeader
+          striped={true}
+        />
+      )}
     </Box>
   );
 }

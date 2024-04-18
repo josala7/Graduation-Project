@@ -20,7 +20,7 @@ function AppModal({ children, open, setOpen, headerTitle }) {
           borderRadius: 6,
           border: "none",
           outline: "none",
-          width: { xs: 340, md: 700 },
+          maxWidth: { xs: 340, sm: 600, md: 700 },
           // height: { xs: 600, md: 500 },
           direction: "rtl",
           overflow: "hidden",
@@ -51,7 +51,7 @@ function AppModal({ children, open, setOpen, headerTitle }) {
           sx={{
             px: 2,
             py: 3,
-            height: "500px",
+            maxHeight: "500px",
             width: "100%",
             overflowY: "auto",
           }}

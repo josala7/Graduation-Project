@@ -6,13 +6,13 @@ import { CssBaseline } from "@mui/material";
 import Products from "./features/pages/Products";
 import Login from "./features/auth/Login";
 import Signup from "./features/auth/Signup";
-import Settings from "./features/pages/Settings";
 import Distributors from "./features/pages/Distributors";
 import Orders from "./features/pages/Orders";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProductDetails from "./features/products/ProductDetails";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProductSettings from "./features/pages/ProductSettings";
 
 const router = createBrowserRouter([
   {
@@ -36,11 +36,12 @@ const router = createBrowserRouter([
         element: <Orders />,
       },
       {
-        path: "settings",
-        element: <Settings />,
+        path: "/settings/products",
+        element: <ProductSettings />,
       },
+
       {
-        path: "/products/:productId",
+        path: "products/:productId",
         element: <ProductDetails />,
       },
     ],

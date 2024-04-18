@@ -8,7 +8,7 @@ const apiRequest = axios.create({
 apiRequest.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log(error.response.status);
+    console.error(error.response.status);
     if (error.response.status === 401) {
       // logoutUser();
       // window.location.reload();
