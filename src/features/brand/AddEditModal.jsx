@@ -14,7 +14,7 @@ function AddEditModal({
   isLoading,
   btnLabel,
 }) {
-  const { data, isLoading: isGettingCatrgories } = useQuery({
+  const { data, isLoading: isGettingCategories } = useQuery({
     queryKey: ["ProductsCategories"],
     queryFn: getAllProductsCategory,
   });

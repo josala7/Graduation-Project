@@ -35,16 +35,19 @@ function AppCard({ item }) {
         image={imageCover}
       />
 
-      <Stack pt={3} pb={1} spacing={2}>
-        <Typography variant="body1" fontWeight={"bold"}>
-          {title}
-        </Typography>
+      <Stack pt={3} pb={2} flex={1}>
+        <Stack spacing={2} flex={1} pb={3}>
+          <Typography variant="body1" fontWeight={"bold"}>
+            {title}
+          </Typography>
 
-        {/* <Rating dir="ltr" name="rating" defaultValue={3} precision={1} /> */}
+          {/* <Rating dir="ltr" name="rating" defaultValue={3} precision={1} /> */}
 
-        <Typography variant="body1">{price} جنيها</Typography>
+          <Typography variant="body1">{price} جنيها</Typography>
+        </Stack>
 
         <AppButton
+          sx
           onClick={() => navigate(`/products/${productId}`, { state: item })}
         >
           عرض التفاصيل

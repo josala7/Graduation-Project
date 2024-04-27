@@ -13,7 +13,12 @@ export const getProduct = async (id) => {
   return res;
 };
 export const createProduct = async (body) => {
-  const res = await axiosPostRequest("product", body);
+  const res = await axiosPostRequest(
+    "product",
+    body,
+    null,
+    "multipart/form-data"
+  );
   return res;
 };
 export const updateProduct = async (id, body) => {

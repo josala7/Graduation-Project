@@ -151,7 +151,6 @@ function ProductCategory() {
   ];
 
   const handleAddSubmit = (values) => {
-    console.log(values, "valuesvalues");
     const formData = new FormData();
     formData.append("title", values.title);
     if (values.image) {

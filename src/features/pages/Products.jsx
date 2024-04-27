@@ -2,15 +2,14 @@ import { Stack, Typography } from "@mui/material";
 import AppCard from "../../components/ui/AppCard";
 import AppBreadcrumps from "../../components/ui/AppBreadcrumps";
 import { BsBoxSeamFill } from "react-icons/bs";
-import { getAllProducts } from "../../services/apiProducts";
-import { useQuery } from "@tanstack/react-query";
+import { createProduct, getAllProducts } from "../../services/apiProducts";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import AppModal from "../../components/ui/AppModal";
 import { useState } from "react";
-import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import InputControl from "../../components/ui/form-elements/InputControl";
-import AppButton from "../../components/ui/AppButton";
 import AppCardSkeleton from "../../components/ui/AppCardSkeleton";
+import AddEditProduct from "../products/AddEditProduct";
+import { errorToast, successToast } from "../../utils/toastUtils";
 
 const breadcrumbs = [
   <Typography
@@ -32,10 +31,10 @@ const initialValues = {
   title: "",
   description: "",
   price: "",
-  quantity: "",
+  quantity: "1",
   imageCover: "",
   images: [],
-  brand: "[]",
+  brand: "",
   category: "",
 
   subCategory: "",
@@ -47,10 +46,6 @@ const validationSchema = Yup.object({
   price: Yup.number().required("لابد من اٍدخال سعر المنتج"),
 });
 
-const onSubmit = (values) => {
-  console.log(values, "values");
-};
-
 function Products() {
   const [addProductModal, setAddProductModal] = useState(false);
 
@@ -58,6 +53,41 @@ function Products() {
     queryKey: ["products"],
     queryFn: getAllProducts,
   });
+
+  const queryClient = useQueryClient();
+
+  const {
+    mutate: addProduct,
+    isPending: isAdding,
+    isSuccess: isAddingSuccess,
+  } = useMutation({
+    mutationFn: createProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["products"]);
+      successToast("تم اٍضافة المنتج بنجاح");
+    },
+    onError: (err) => {
+      errorToast(err);
+    },
+  });
+
+  const onAddProduct = (values) => {
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("imageCover", values.imageCover);
+    formData.append("images", values.imageCover);
+    formData.append("description", values.description);
+    formData.append("price", values.price);
+    formData.append("quantity", values.quantity);
+    formData.append("category", values.category);
+    formData.append("brand", values.brand);
+
+    try {
+      addProduct(formData);
+    } catch (error) {
+      console.error("Error updating category:", error.message);
+    }
+  };
 
   return (
     <Stack spacing={4}>
@@ -95,67 +125,17 @@ function Products() {
       </Stack>
 
       <AppModal
+        isSuccess={isAddingSuccess}
         open={addProductModal}
         setOpen={setAddProductModal}
         headerTitle="اٍضافة منتج جديد"
       >
-        <Formik
+        <AddEditProduct
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={onSubmit}
-        >
-          {(formik) => {
-            return (
-              <Form style={{ height: "100%" }}>
-                <Stack spacing={3} px={3} height={"100%"} width={"100%"}>
-                  <InputControl
-                    name="title"
-                    label="اسم المنتج"
-                    placeholder="ادخل اسم المنتج"
-                    type="text"
-                    control={"input"}
-                    isRequired
-                  />
-
-                  <InputControl
-                    name="description"
-                    label="وصف المنتج"
-                    placeholder="ادخل وصف المنتج"
-                    type="text"
-                    control={"input"}
-                    isRequired
-                  />
-
-                  <InputControl
-                    name="price"
-                    label="سعر القطعة الواحدة"
-                    placeholder="50$"
-                    type="number"
-                    control={"input"}
-                    isRequired
-                  />
-
-                  <InputControl
-                    name="quantity"
-                    label="الكمية"
-                    placeholder="5"
-                    type="number"
-                    control={"input"}
-                    isRequired
-                  />
-
-                  <AppButton
-                    type="submit"
-                    disabled={formik.isSubmitting}
-                    fullWidth
-                  >
-                    اٍنشاء الحساب
-                  </AppButton>
-                </Stack>
-              </Form>
-            );
-          }}
-        </Formik>
+          onSubmit={onAddProduct}
+          isLoading={isAdding}
+        />
       </AppModal>
     </Stack>
   );

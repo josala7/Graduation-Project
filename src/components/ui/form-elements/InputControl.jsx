@@ -8,6 +8,7 @@ import { DiCssTricks } from "react-icons/di";
 import { red } from "@mui/material/colors";
 import FileInput from "./FileUpload";
 import AppSelect from "./AppSelect";
+import MultipleFileInput from "./MultipleFileInput ";
 
 function InputControl(props) {
   const { label, control, name, isRequired } = props;
@@ -20,6 +21,9 @@ function InputControl(props) {
       break;
     case "fileUpload":
       inputComponent = <FileInput {...props} />;
+      break;
+    case "multipleFileUpload":
+      inputComponent = <MultipleFileInput {...props} />;
       break;
     case "select":
       inputComponent = <AppSelect {...props} />;
