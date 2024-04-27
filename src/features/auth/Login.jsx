@@ -12,8 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { errorToast } from "../../utils/toastUtils";
 
 const initialValues = {
-  email: "gory@gmail.com",
-  password: "P@ssw0rd",
+  email: "",
+  password: "",
 };
 
 const validationSchema = Yup.object({
