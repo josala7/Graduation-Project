@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 import ConfirmModal from "./ui/ConfirmModal";
 
-function DeleteIcon({ onDelete, isDeleting }) {
+function DeleteIcon({ onDelete, isDeleting, isSuccess }) {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   return (
     <div>
@@ -28,6 +28,7 @@ function DeleteIcon({ onDelete, isDeleting }) {
       </Box>
 
       <ConfirmModal
+        isSuccess={isSuccess}
         open={openConfirmModal}
         setOpen={setOpenConfirmModal}
         isConfirmLoading={isDeleting}

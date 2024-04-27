@@ -11,12 +11,22 @@ export const getAllProductsCategory = async () => {
 };
 
 export const addProductCategory = async (body) => {
-  const res = await axiosPostRequest("categories", body);
+  const res = await axiosPostRequest(
+    "categories",
+    body,
+    null,
+    "multipart/form-data"
+  );
   return res;
 };
 
-export const updateProductCategory = async (id, body) => {
-  const res = await axiosPutRequest(`categories/${id}`, body);
+export const updateProductCategory = async ({ id, body }) => {
+  const res = await axiosPutRequest(
+    `categories/${id}`,
+    body,
+    null,
+    "multipart/form-data"
+  );
   return res;
 };
 

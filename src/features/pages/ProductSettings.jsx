@@ -3,7 +3,8 @@ import AppBreadcrumps from "../../components/ui/AppBreadcrumps";
 import { IoSettingsSharp } from "react-icons/io5";
 import AppTabs from "../../components/ui/AppTabs";
 import { BiCategory } from "react-icons/bi";
-import ProductCategory from "../products/ProductCategory";
+import ProductCategory from "../category/ProductCategory";
+import ProductBrand from "../brand/ProductBrand";
 function ProductSettings() {
   const breadcrumbs = [
     <Typography
@@ -38,13 +39,11 @@ function ProductSettings() {
   const tabs = [
     {
       tabName: "نوع المنتج",
-      tabIcon: <BiCategory fontSize={"17px"} />,
       tabContent: <ProductCategory />,
     },
     {
-      tabName: "tabName",
-      tabIcon: <BiCategory fontSize={"17px"} />,
-      tabContent: <div>ssadasdsad</div>,
+      tabName: "البراند",
+      tabContent: <ProductBrand />,
     },
   ];
   return (

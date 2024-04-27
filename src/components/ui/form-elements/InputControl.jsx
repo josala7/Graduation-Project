@@ -6,6 +6,8 @@ import { ErrorMessage } from "formik";
 import AppInput from "./AppInput";
 import { DiCssTricks } from "react-icons/di";
 import { red } from "@mui/material/colors";
+import FileInput from "./FileUpload";
+import AppSelect from "./AppSelect";
 
 function InputControl(props) {
   const { label, control, name, isRequired } = props;
@@ -15,6 +17,12 @@ function InputControl(props) {
   switch (control) {
     case "input":
       inputComponent = <AppInput {...props} />;
+      break;
+    case "fileUpload":
+      inputComponent = <FileInput {...props} />;
+      break;
+    case "select":
+      inputComponent = <AppSelect {...props} />;
       break;
     // case 'textarea':
     //   return <Textarea {...rest} />

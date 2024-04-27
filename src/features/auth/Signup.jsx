@@ -4,15 +4,24 @@ import * as Yup from "yup";
 import AppButton from "../../components/ui/AppButton";
 import InputControl from "../../components/ui/form-elements/InputControl";
 import { signup } from "../../assets";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { errorToast } from "../../utils/toastUtils";
+import { apiSignUp } from "../../services/apiAuth";
 
 const initialValues = {
+  name: "",
   email: "",
   password: "",
-  taxNumber: "",
+  rePassword: "",
+  phone: "",
+
+  // taxNumber: "",
 };
 
 const validationSchema = Yup.object({
+  name: Yup.string().required("لابد من اٍدخال اسم الشركة"),
+
   email: Yup.string()
     .email("برجاء اٍدخال بريد اٍلكتروني بطريفة صحيحة")
     .required("لابد من اٍدخال البريد الاٍلكتروني"),
@@ -21,21 +30,45 @@ const validationSchema = Yup.object({
     .required("لابد من اٍدخال كلمة السر")
     .min(6, "يجب أن تحتوي كلمة السر على 6 أحرف على الأقل"),
 
-  taxNumber: Yup.number()
-    .typeError("برجاء اٍدخال أرقام فقط")
-    .required("لابد من اٍدخال الرقم الضريبي")
-    .test(
-      "len",
-      "يجب أن يحتوي الرقم الضريبي على 5 أرقام",
-      (val) => val.toString().length === 5
-    ),
+  rePassword: Yup.string()
+    .required("لابد من اٍدخال كلمة السر")
+    .oneOf([Yup.ref("password")], "يجب أن تتطابق كلمتا السر"),
+
+  phone: Yup.number().required("لابد من اٍدخال رقم الهاتف"),
+
+  // taxNumber: Yup.number()
+  //   .typeError("برجاء اٍدخال أرقام فقط")
+  //   .required("لابد من اٍدخال الرقم الضريبي")
+  //   .test(
+  //     "len",
+  //     "يجب أن يحتوي الرقم الضريبي على 5 أرقام",
+  //     (val) => val.toString().length === 5
+  //   ),
 });
 
-const onSubmit = (values) => {
-  console.log(values, "values");
-};
-
 function Signup() {
+  const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+
+  const { mutate: login, isLoading } = useMutation({
+    mutationFn: (body) => apiSignUp(body),
+    onSuccess: () => {
+      navigate("/");
+      queryClient.setQueryData(["user"]);
+    },
+    onError: (err) => {
+      errorToast(err.response.data.err);
+    },
+  });
+
+  const onSubmit = async (values) => {
+    try {
+      login(values);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <Box
       sx={{
@@ -85,6 +118,15 @@ function Signup() {
                   <Typography variant="h5">اٍنشاء حساب جديد</Typography>
 
                   <InputControl
+                    name="name"
+                    label="اسم الشركة"
+                    placeholder="tiger"
+                    type="text"
+                    control={"input"}
+                    isRequired
+                  />
+
+                  <InputControl
                     name="email"
                     label="البريد الالكتروني"
                     placeholder="example@gmail.com"
@@ -103,20 +145,34 @@ function Signup() {
                   />
 
                   <InputControl
+                    name="rePassword"
+                    label="اعد ادخال كلمة السر"
+                    placeholder="•••••••••"
+                    type="rePassword"
+                    control={"input"}
+                    isRequired
+                  />
+
+                  <InputControl
+                    name="phone"
+                    label="رقم التليفون"
+                    placeholder="01217522668"
+                    type="phone"
+                    control={"input"}
+                    isRequired
+                  />
+
+                  {/* <InputControl
                     name="taxNumber"
                     label="الرقم الضريبي"
                     placeholder="574541"
                     type="number"
                     control={"input"}
                     isRequired
-                  />
+                  /> */}
                 </Stack>
 
-                <AppButton
-                  type="submit"
-                  disabled={formik.isSubmitting}
-                  fullWidth
-                >
+                <AppButton type="submit" disabled={isLoading} fullWidth>
                   اٍنشاء الحساب
                 </AppButton>
               </Form>

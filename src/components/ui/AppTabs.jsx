@@ -3,8 +3,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import React, { useState } from "react";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -36,7 +35,7 @@ function AppTabs({ tabs }) {
     <Stack>
       <Tabs value={selectedTab} aria-label="icon label tabs example">
         {tabs.map((tab, index) => (
-          <>
+          <React.Fragment key={tab.tabName}>
             <Tab
               sx={
                 selectedTab === index
@@ -45,9 +44,17 @@ function AppTabs({ tabs }) {
                       bgcolor: "#eee",
                       color: "#1976d2",
                       gap: 1,
-                      p: 2,
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      px: 3,
                     }
-                  : { gap: 1 }
+                  : {
+                      gap: 1,
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      py: 1,
+                      px: 4,
+                    }
               }
               key={tab.tabName}
               icon={tab.tabIcon}
@@ -55,7 +62,7 @@ function AppTabs({ tabs }) {
               iconPosition="start"
               onClick={() => handleChange(index)}
             />
-          </>
+          </React.Fragment>
         ))}
       </Tabs>
 

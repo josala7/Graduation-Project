@@ -1,18 +1,12 @@
 /* eslint-disable react/prop-types */
-import {
-  MdModeEditOutline,
-  MdOutlineDelete,
-  MdOutlineEdit,
-} from "react-icons/md";
+import { MdModeEditOutline } from "react-icons/md";
 import { Box } from "@mui/material";
 import AppModal from "./ui/AppModal";
+import { useEffect, useState } from "react";
 
-function EditIcon({
-  modalHeader,
-  modalContent,
-  openEditModal,
-  setOpenEditModal,
-}) {
+function EditIcon({ modalHeader, modalContent, isSuccess }) {
+  const [openEditModal, setOpenEditModal] = useState(false);
+
   return (
     <div>
       <Box
@@ -38,6 +32,7 @@ function EditIcon({
         open={openEditModal}
         setOpen={setOpenEditModal}
         headerTitle={modalHeader}
+        isSuccess={isSuccess}
       >
         {modalContent}
       </AppModal>

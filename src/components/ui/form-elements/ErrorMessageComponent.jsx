@@ -5,7 +5,7 @@ import { MdErrorOutline } from "react-icons/md";
 function ErrorMessageComponent({ children }) {
   return (
     <Stack
-      direction={"flex"}
+      direction={"row"}
       gap={1}
       alignItems={"center"}
       color={red[700]}

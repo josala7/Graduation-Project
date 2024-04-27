@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Button, CircularProgress } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
 
 function AppButton({ children, onClick, isLoading, ...rest }) {
   return (
@@ -7,7 +7,6 @@ function AppButton({ children, onClick, isLoading, ...rest }) {
       {...rest}
       onClick={() => onClick?.()}
       sx={{
-        p: isLoading ? "20px" : "5px",
         px: "30px",
         borderRadius: 2,
         fontSize: "16px",
@@ -18,7 +17,19 @@ function AppButton({ children, onClick, isLoading, ...rest }) {
         },
       }}
     >
-      {isLoading ? <CircularProgress size="30px" /> : children}
+      {isLoading ? (
+        <Box display={"flex"} gap={2} alignItems={"center"}>
+          <CircularProgress
+            size="15px"
+            sx={{
+              color: "white",
+            }}
+          />{" "}
+          جاري التحميل...
+        </Box>
+      ) : (
+        children
+      )}
     </Button>
   );
 }

@@ -2,8 +2,21 @@
 import { Box, Modal, Stack, Button, Typography } from "@mui/material";
 import { IoClose } from "react-icons/io5";
 import { deleteImg } from "../../assets";
+import { useEffect } from "react";
 
-function ConfirmModal({ open, setOpen, onConfirm, isConfirmLoading }) {
+function ConfirmModal({
+  open,
+  setOpen,
+  onConfirm,
+  isConfirmLoading,
+  isSuccess,
+}) {
+  useEffect(() => {
+    if (isSuccess) {
+      setOpen(false);
+    }
+  }, [isSuccess, setOpen]);
+
   return (
     <Modal
       open={open}
@@ -29,7 +42,7 @@ function ConfirmModal({ open, setOpen, onConfirm, isConfirmLoading }) {
       >
         {/* header */}
         <Stack
-          direction={"flex"}
+          direction={"row"}
           justifyContent={"space-between"}
           alignItems={"center"}
         >

@@ -18,13 +18,13 @@ function Header() {
   };
   return (
     <Stack
-      direction={"flex"}
+      direction={"row"}
       justifyContent={"space-between"}
       alignItems={"center"}
       borderRadius={5}
       mb={4}
     >
-      <Stack direction={"flex"} gap={2}>
+      <Stack direction={"row"} gap={2}>
         <IconButton sx={{ p: 0 }}>
           <Avatar alt="Mahmoud" src="/static/images/avatar/2.jpg" />
         </IconButton>

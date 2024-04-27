@@ -2,21 +2,18 @@ import { errorToast } from "../utils/toastUtils";
 import apiRequest from "./apiRequests";
 const baseUrl = "http://localhost:3000/api/v1";
 
-const tokenConfig = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-    "Content-Type": "application/json",
-  },
-};
-
 export const axiosGetRequest = async (
   api,
   params,
+  contentType = "application/json",
   defaultErrorMessage = true
 ) => {
   try {
     const { data } = await apiRequest.get(`${baseUrl}/${api}`, {
-      ...tokenConfig,
+      headers: {
+        token: `${localStorage.getItem("token")}`,
+        "Content-Type": contentType,
+      },
       params,
     });
     return data;
@@ -48,12 +45,15 @@ export const axiosPostRequest = async (
   api,
   data,
   params,
-  defaultErrorMessage = true,
+  contentType = "application/json",
   responseBlob = false
 ) => {
   try {
     const config = {
-      ...tokenConfig,
+      headers: {
+        token: `${localStorage.getItem("token")}`,
+        "Content-Type": contentType,
+      },
       params: params,
       responseType: responseBlob ? "blob" : "json",
     };
@@ -65,25 +65,7 @@ export const axiosPostRequest = async (
     );
     return res;
   } catch (error) {
-    if (
-      error?.response?.data?.error?.message ==
-      "An internal error occurred during your request!"
-    ) {
-      errorToast("حدث خطأ،يرجى التحدث للدعم الفنى");
-      return;
-    }
-    if (error?.response?.status == 400) {
-      errorToast(error?.response?.data?.error?.details);
-      return;
-    }
-    if (error?.response?.status == 403) {
-      errorToast("حدث خطا!");
-      return;
-    }
-    if (defaultErrorMessage) {
-      errorToast(error?.response?.data?.error?.message);
-      return;
-    }
+    errorToast(error);
 
     return error;
   }
@@ -93,11 +75,15 @@ export const axiosPutRequest = async (
   api,
   data,
   params,
+  contentType = "application/json",
   defaultErrorMessage = true
 ) => {
   try {
     const { data: res } = await apiRequest.put(`${baseUrl}/${api}`, data, {
-      ...tokenConfig,
+      headers: {
+        token: `${localStorage.getItem("token")}`,
+        "Content-Type": contentType,
+      },
       params,
     });
     return res;
@@ -128,11 +114,15 @@ export const axiosPutRequest = async (
 export const axiosDeleteRequest = async (
   api,
   params,
+  contentType = "application/json",
   defaultErrorMessage = true
 ) => {
   try {
     const { data: res } = await apiRequest.delete(`${baseUrl}/${api}`, {
-      ...tokenConfig,
+      headers: {
+        token: `${localStorage.getItem("token")}`,
+        "Content-Type": contentType,
+      },
       params,
     });
     return res;

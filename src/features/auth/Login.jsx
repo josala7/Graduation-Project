@@ -35,7 +35,7 @@ function Login() {
     mutationFn: (body) => apiLogin(body),
     onSuccess: () => {
       navigate("/");
-      queryClient.setQueryData(["user"], data.user);
+      queryClient.setQueryData(["user"]);
     },
     onError: (err) => {
       errorToast(err.response.data.err);

@@ -1,8 +1,15 @@
+/* eslint-disable react/prop-types */
 import { Box, Modal, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 
-function AppModal({ children, open, setOpen, headerTitle }) {
+function AppModal({ children, open, setOpen, headerTitle, isSuccess }) {
+  useEffect(() => {
+    if (isSuccess) {
+      setOpen(false);
+    }
+  }, [isSuccess, setOpen]);
+
   return (
     <Modal
       open={open}
@@ -28,7 +35,7 @@ function AppModal({ children, open, setOpen, headerTitle }) {
       >
         {/* header */}
         <Stack
-          direction={"flex"}
+          direction={"row"}
           justifyContent={"space-between"}
           alignItems={"center"}
           p={2}

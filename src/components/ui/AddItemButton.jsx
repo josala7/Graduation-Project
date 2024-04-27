@@ -3,7 +3,13 @@ import { useState } from "react";
 import AppButton from "./AppButton";
 import AppModal from "./AppModal";
 
-function AddItemButton({ children, modalContent, modalHeader, props }) {
+function AddItemButton({
+  children,
+  modalContent,
+  modalHeader,
+  props,
+  isSuccess,
+}) {
   const [openAddModal, setOpenAddModal] = useState(false);
 
   return (
@@ -13,6 +19,7 @@ function AddItemButton({ children, modalContent, modalHeader, props }) {
       </AppButton>
 
       <AppModal
+        isSuccess={isSuccess}
         open={openAddModal}
         setOpen={setOpenAddModal}
         headerTitle={modalHeader}

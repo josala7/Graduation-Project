@@ -20,7 +20,7 @@ function AppBreadcrumps({
         {breadcrumbs}
       </Breadcrumbs>
 
-      <Stack direction={"flex"} spacing={2}>
+      <Stack direction={"row"} spacing={2}>
         {addButton && (
           <AppButton onClick={onAddButtonClick}>
             {addButtonText ? addButtonText : "اٍضافة"}
