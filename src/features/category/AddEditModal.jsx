@@ -4,7 +4,6 @@ import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
 import InputControl from "../../components/ui/form-elements/InputControl";
 import AppButton from "../../components/ui/AppButton";
 import { Stack } from "@mui/material";
-import FileUpload from "../../components/ui/form-elements/FileUpload";
 import { useState } from "react";
 
 function AddEditModal({
@@ -33,7 +32,11 @@ function AddEditModal({
                 isRequired
               />
 
-              <FileUpload name="image" label={"ارفع صورة"} />
+              <InputControl
+                control="fileUpload"
+                name="image"
+                label={"ارفع صورة"}
+              />
 
               <AppButton
                 type="submit"

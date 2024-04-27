@@ -4,7 +4,6 @@ import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
 import InputControl from "../../components/ui/form-elements/InputControl";
 import AppButton from "../../components/ui/AppButton";
 import { Stack } from "@mui/material";
-import FileUpload from "../../components/ui/form-elements/FileUpload";
 import { getAllProductsCategory } from "../../services/apiProductsCategory";
 import { useQuery } from "@tanstack/react-query";
 
@@ -23,7 +22,7 @@ function AddEditModal({
   const options = data?.categories.map((option) => {
     return {
       label: option.title,
-      valie: option._id,
+      value: option._id,
     };
   });
   return (
@@ -49,13 +48,16 @@ function AddEditModal({
                 name="category"
                 label="اختر المنتج الرئيسي"
                 placeholder="اختر المنتج"
-                type="text"
                 control={"select"}
                 options={options}
                 isRequired
               />
 
-              <FileUpload name="image" label={"ارفع صورة"} />
+              <InputControl
+                control="fileUpload"
+                name="image"
+                label={"ارفع صورة"}
+              />
 
               <AppButton
                 type="submit"

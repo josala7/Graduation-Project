@@ -38,10 +38,12 @@ function ProductSettings() {
 
   const tabs = [
     {
+      q: "category",
       tabName: "نوع المنتج",
       tabContent: <ProductCategory />,
     },
     {
+      q: "brand",
       tabName: "البراند",
       tabContent: <ProductBrand />,
     },

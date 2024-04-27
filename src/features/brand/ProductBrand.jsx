@@ -123,6 +123,7 @@ function ProductBrand() {
                 btnLabel="تعديل"
                 initialValues={{
                   title: row.title,
+                  category: row.category,
                   image: row.logo,
                 }}
                 validationSchema={validationSchema}
@@ -154,7 +155,7 @@ function ProductBrand() {
     formData.append("category", values.category);
     formData.append("image", values.image);
 
-    // addBrand(formData);
+    addBrand(formData);
   };
 
   return (

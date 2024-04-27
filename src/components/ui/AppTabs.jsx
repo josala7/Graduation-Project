@@ -35,34 +35,32 @@ function AppTabs({ tabs }) {
     <Stack>
       <Tabs value={selectedTab} aria-label="icon label tabs example">
         {tabs.map((tab, index) => (
-          <React.Fragment key={tab.tabName}>
-            <Tab
-              sx={
-                selectedTab === index
-                  ? {
-                      borderRadius: "20px 20px 0px 0px",
-                      bgcolor: "#eee",
-                      color: "#1976d2",
-                      gap: 1,
-                      fontSize: "16px",
-                      fontWeight: "bold",
-                      px: 3,
-                    }
-                  : {
-                      gap: 1,
-                      fontSize: "16px",
-                      fontWeight: "bold",
-                      py: 1,
-                      px: 4,
-                    }
-              }
-              key={tab.tabName}
-              icon={tab.tabIcon}
-              label={tab.tabName}
-              iconPosition="start"
-              onClick={() => handleChange(index)}
-            />
-          </React.Fragment>
+          <Tab
+            sx={
+              selectedTab === index
+                ? {
+                    borderRadius: "20px 20px 0px 0px",
+                    bgcolor: "#eee",
+                    color: "#1976d2",
+                    gap: 1,
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    px: 3,
+                  }
+                : {
+                    gap: 1,
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    py: 1,
+                    px: 4,
+                  }
+            }
+            key={tab.tabName}
+            icon={tab.tabIcon}
+            label={tab.tabName}
+            iconPosition="start"
+            onClick={() => handleChange(index)}
+          />
         ))}
       </Tabs>
 
