@@ -73,7 +73,7 @@ function Signup() {
     <Box
       sx={{
         width: "100%",
-        height: "100dvh",
+        minHeight: "100dvh",
         display: "flex",
       }}
     >
@@ -114,7 +114,7 @@ function Signup() {
           {(formik) => {
             return (
               <Form>
-                <Stack spacing={3} mb={4} width={{ xs: "340px", md: "380px" }}>
+                <Stack spacing={1} mb={4} width={{ xs: "340px", md: "380px" }}>
                   <Typography variant="h5">اٍنشاء حساب جديد</Typography>
 
                   <InputControl
@@ -182,7 +182,7 @@ function Signup() {
 
         <Divider
           sx={{
-            mt: 3,
+            mt: 1,
           }}
         >
           أو
@@ -190,7 +190,7 @@ function Signup() {
 
         <Typography
           sx={{
-            mt: 2,
+            mt: 1,
             textAlign: "center",
             fontWeight: "bold",
             color: "#757575",
