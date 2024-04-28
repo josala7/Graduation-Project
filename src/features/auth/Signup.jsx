@@ -172,7 +172,12 @@ function Signup() {
                   /> */}
                 </Stack>
 
-                <AppButton type="submit" disabled={isLoading} fullWidth>
+                <AppButton
+                  type="submit"
+                  isLoading={isLoading}
+                  disabled={isLoading}
+                  fullWidth
+                >
                   اٍنشاء الحساب
                 </AppButton>
               </Form>
