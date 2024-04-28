@@ -1,5 +1,4 @@
-import { Stack, Typography } from "@mui/material";
-import AppCard from "../../components/ui/AppCard";
+import { Box, Pagination, Stack, Typography } from "@mui/material";
 import AppBreadcrumps from "../../components/ui/AppBreadcrumps";
 import { BsBoxSeamFill } from "react-icons/bs";
 import { createProduct, getAllProducts } from "../../services/apiProducts";
@@ -7,9 +6,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import AppModal from "../../components/ui/AppModal";
 import { useState } from "react";
 import * as Yup from "yup";
-import AppCardSkeleton from "../../components/ui/AppCardSkeleton";
 import AddEditProduct from "../products/AddEditProduct";
 import { errorToast, successToast } from "../../utils/toastUtils";
+import TableCardSwitch from "../../components/ui/TableCardSwitch";
+import ProductsCardView from "../products/ProductsCardView";
+import ProductsTableView from "../products/ProductsTableView";
 
 const breadcrumbs = [
   <Typography
@@ -48,10 +49,15 @@ const validationSchema = Yup.object({
 
 function Products() {
   const [addProductModal, setAddProductModal] = useState(false);
+  const [showTable, setShowTable] = useState(false);
+  const [page, setPage] = useState(1);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["products"],
-    queryFn: getAllProducts,
+    queryKey: ["products", page],
+    queryFn: () =>
+      getAllProducts({
+        page: page,
+      }),
   });
 
   const queryClient = useQueryClient();
@@ -75,7 +81,9 @@ function Products() {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("imageCover", values.imageCover);
-    formData.append("images", values.imageCover);
+    if (values?.images?.length) {
+      values?.images?.map((ele) => formData.append("images", ele));
+    }
     formData.append("description", values.description);
     formData.append("price", values.price);
     formData.append("quantity", values.quantity);
@@ -89,40 +97,51 @@ function Products() {
     }
   };
 
+  const totalProducts = data?.totalCount;
+  const numOfPages = Math.ceil(totalProducts / 6);
+
   return (
-    <Stack spacing={4}>
+    <Stack spacing={2}>
       <AppBreadcrumps
         breadcrumbs={breadcrumbs}
         addButton
         onAddButtonClick={() => setAddProductModal(true)}
       />
 
-      <Stack
-        sx={{
-          display: "grid",
-          gap: 4,
-          gridTemplateColumns: {
-            xs: "repeat(1, 1fr)",
-            md: "repeat(2, 1fr)",
-            lg: "repeat(3, 1fr)",
-          },
-        }}
-      >
-        {isLoading ? (
-          <>
-            <AppCardSkeleton />
-            <AppCardSkeleton />
-            <AppCardSkeleton />
-            <AppCardSkeleton />
-            <AppCardSkeleton />
-            <AppCardSkeleton />
-          </>
-        ) : (
-          data?.allProducts.map((product) => (
-            <AppCard item={product} key={product.id} />
-          ))
-        )}
+      <Stack flexDirection={"row"} justifyContent={"flex-end"}>
+        <TableCardSwitch setShowTable={setShowTable} showTable={showTable} />
       </Stack>
+
+      {showTable ? (
+        <ProductsTableView
+          products={data?.allProducts}
+          isLoading={isLoading}
+          validationSchema={validationSchema}
+        />
+      ) : (
+        <ProductsCardView products={data?.allProducts} isLoading={isLoading} />
+      )}
+
+      <Box
+        mt={5}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <Pagination
+          variant="text"
+          shape="rounded"
+          size={"medium"}
+          color="primary"
+          showFirstButton
+          showLastButton
+          page={page}
+          onChange={(e, page) => {
+            setPage(page);
+          }}
+          count={numOfPages}
+        />
+      </Box>
 
       <AppModal
         isSuccess={isAddingSuccess}

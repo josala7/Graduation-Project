@@ -8,7 +8,10 @@ function AppLayout() {
   return (
     <Box display={"flex"}>
       <SideMenu />
-      <Box sx={{ width: "100%", mr: "235px", bgcolor: appStyle.mainColor }}>
+      <Box
+        sx={{ width: "100%", mr: "235px", bgcolor: appStyle.mainColor }}
+        overflow={"hidden"}
+      >
         <Box
           sx={{
             // overflowY: "auto",

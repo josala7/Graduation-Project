@@ -1,11 +1,9 @@
 import axios from "axios";
+import { baseUrl } from "./requests";
 
 export const apiLogin = async (body) => {
   try {
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/auth/signin",
-      body
-    );
+    const response = await axios.post(`${baseUrl}/auth/signin`, body);
 
     // Assuming the server returns a token upon successful login
     const token = response.data.token;
@@ -24,10 +22,7 @@ export const apiLogin = async (body) => {
 
 export const apiSignUp = async (body) => {
   try {
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/auth/signup",
-      body
-    );
+    const response = await axios.post(`${baseUrl}/auth/signup`, body);
 
     // Assuming the server returns a token upon successful login
     const token = response.data.token;

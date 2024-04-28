@@ -4,28 +4,41 @@ import {
   axiosPostRequest,
 } from "./requests";
 
-export const getAllProducts = async () => {
-  const res = await axiosGetRequest("product");
+export const getAllProducts = async (param) => {
+  const res = await axiosGetRequest("product", param);
   return res;
 };
 export const getProduct = async (id) => {
-  const res = await axiosGetRequest(`product/${id}`);
-  return res;
+  try {
+    const res = await axiosGetRequest(`product/${id}`);
+    return res;
+  } catch (error) {
+    throw new Error("حدث خطأ");
+  }
 };
 export const createProduct = async (body) => {
-  const res = await axiosPostRequest(
-    "product",
+  try {
+    const res = await axiosPostRequest(
+      "product",
+      body,
+      null,
+      "multipart/form-data"
+    );
+    return res;
+  } catch (error) {
+    throw new Error("حدث خطأ");
+  }
+};
+export const updateProductApi = async ({ id, body }) => {
+  const res = await axiosGetRequest(
+    `product/${id}`,
     body,
     null,
     "multipart/form-data"
   );
   return res;
 };
-export const updateProduct = async (id, body) => {
-  const res = await axiosGetRequest(`product/${id}`, body);
-  return res;
-};
-export const deleteProduct = async (id) => {
+export const deleteProductApi = async (id) => {
   const res = await axiosDeleteRequest(`product/${id}`);
   return res;
 };

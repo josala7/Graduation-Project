@@ -1,6 +1,6 @@
 import { errorToast } from "../utils/toastUtils";
 import apiRequest from "./apiRequests";
-const baseUrl = "http://localhost:3000/api/v1";
+export const baseUrl = "https://aegina.onrender.com/api/v1";
 
 export const axiosGetRequest = async (
   api,

@@ -1,14 +1,5 @@
 /* eslint-disable react/prop-types */
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Rating,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { product1 } from "../../assets";
+import { Card, CardMedia, Stack, Typography } from "@mui/material";
 import AppButton from "./AppButton";
 import { useNavigate } from "react-router-dom";
 
@@ -35,7 +26,7 @@ function AppCard({ item }) {
         image={imageCover}
       />
 
-      <Stack pt={3} pb={2} flex={1}>
+      <Stack pt={3} pb={0} flex={1}>
         <Stack spacing={2} flex={1} pb={3}>
           <Typography variant="body1" fontWeight={"bold"}>
             {title}
@@ -47,7 +38,6 @@ function AppCard({ item }) {
         </Stack>
 
         <AppButton
-          sx
           onClick={() => navigate(`/products/${productId}`, { state: item })}
         >
           عرض التفاصيل

@@ -2,6 +2,7 @@
 import { Box } from "@mui/material";
 import DataTable from "react-data-table-component";
 import { noData } from "../../assets";
+import TableSkeleton from "../skeleton/TableSkeleton";
 
 function AppTable({ data, columns, isLoading }) {
   const customStyles = {
@@ -13,24 +14,26 @@ function AppTable({ data, columns, isLoading }) {
     headCells: {
       style: {
         backgroundColor: "#e0e0e0",
-        fontSize: "17px",
+        fontSize: "15px",
         paddingLeft: "8px", // override the cell padding for head cells
         paddingRight: "8px",
+        width: "100px",
       },
     },
 
     cells: {
       style: {
-        fontSize: "16px",
+        fontSize: "14px",
         paddingLeft: "8px", // override the cell padding for data cells
         paddingRight: "8px",
+        width: "100px",
       },
     },
   };
   return (
     <Box>
       {isLoading ? (
-        <div>loading....</div>
+        <TableSkeleton />
       ) : (
         <DataTable
           columns={columns}

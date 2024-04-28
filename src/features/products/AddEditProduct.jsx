@@ -13,7 +13,7 @@ function AddEditProduct({
   validationSchema,
   onSubmit,
   isLoading,
-  btnLabel = "اٍنشاء الحساب",
+  btnLabel = "اٍنشاء منتج",
 }) {
   // getAllCategories
   const { data, isLoading: isGettingCatrgories } = useQuery({
