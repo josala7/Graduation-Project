@@ -51,7 +51,7 @@ function Signup() {
 
   const queryClient = useQueryClient();
 
-  const { mutate: login, isLoading } = useMutation({
+  const { mutate: login, isPending: isLoading } = useMutation({
     mutationFn: (body) => apiSignUp(body),
     onSuccess: () => {
       navigate("/");
