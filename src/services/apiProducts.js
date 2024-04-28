@@ -9,25 +9,17 @@ export const getAllProducts = async (param) => {
   return res;
 };
 export const getProduct = async (id) => {
-  try {
-    const res = await axiosGetRequest(`product/${id}`);
-    return res;
-  } catch (error) {
-    throw new Error("حدث خطأ");
-  }
+  const res = await axiosGetRequest(`product/${id}`);
+  return res;
 };
 export const createProduct = async (body) => {
-  try {
-    const res = await axiosPostRequest(
-      "product",
-      body,
-      null,
-      "multipart/form-data"
-    );
-    return res;
-  } catch (error) {
-    throw new Error("حدث خطأ");
-  }
+  const res = await axiosPostRequest(
+    "product",
+    body,
+    null,
+    "multipart/form-data"
+  );
+  return res;
 };
 export const updateProductApi = async ({ id, body }) => {
   const res = await axiosGetRequest(

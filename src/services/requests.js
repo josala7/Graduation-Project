@@ -18,26 +18,7 @@ export const axiosGetRequest = async (
     });
     return data;
   } catch (error) {
-    if (
-      error?.response?.data?.error?.message ==
-      "An internal error occurred during your request!"
-    ) {
-      errorToast("حدث خطأ،يرجى التحدث للدعم الفنى");
-      return;
-    }
-    if (error?.response?.status == 400) {
-      errorToast(error?.response?.data?.error?.details);
-      return;
-    }
-    if (error?.response?.status == 403) {
-      errorToast("حدث خطا!");
-      return;
-    }
-    if (defaultErrorMessage) {
-      errorToast(error?.response?.data?.error?.message);
-      return;
-    }
-    return error;
+    throw error.response.data.err;
   }
 };
 
@@ -65,9 +46,7 @@ export const axiosPostRequest = async (
     );
     return res;
   } catch (error) {
-    errorToast(error);
-
-    return error;
+    throw error.response.data.err;
   }
 };
 
@@ -128,7 +107,7 @@ export const axiosPutRequest = async (
 
     return response.data;
   } catch (error) {
-    throw new Error(error);
+    throw error.response.data.err;
   }
 };
 
