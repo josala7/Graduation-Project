@@ -78,74 +78,81 @@ export const axiosPutRequest = async (
   contentType = "application/json",
   defaultErrorMessage = true
 ) => {
+  // try {
+  //   const { data: res } = await apiRequest.put(`${baseUrl}/${api}`, data, {
+  //     headers: {
+  //       token: `${localStorage.getItem("token")}`,
+  //       "Content-Type": contentType,
+  //     },
+  //     params,
+  //   });
+  //   return res;
+  // } catch (error) {
+  //   if (
+  //     error?.response?.data?.error?.message ==
+  //     "An internal error occurred during your request!"
+  //   ) {
+  //     errorToast("حدث خطأ،يرجى التحدث للدعم الفنى");
+  //     return;
+  //   }
+  //   if (error?.response?.status == 400) {
+  //     errorToast(error?.response?.data?.error?.details);
+  //     return;
+  //   }
+  //   if (error?.response?.status == 403) {
+  //     errorToast("حدث خطا!");
+  //     return;
+  //   }
+  //   if (defaultErrorMessage) {
+  //     errorToast(error?.response?.data?.error?.message);
+  //     return;
+  //   }
+  //   return error;
+  // }
   try {
-    const { data: res } = await apiRequest.put(`${baseUrl}/${api}`, data, {
-      headers: {
-        token: `${localStorage.getItem("token")}`,
-        "Content-Type": contentType,
+    const token = localStorage.getItem("token");
+
+    if (!token) throw new Error("هذا المستخدم لم يقم بتسجيل الدخول");
+
+    const response = await apiRequest.delete(
+      `${baseUrl}/${api}`,
+      data,
+      {
+        headers: {
+          token: token,
+          "Content-Type": contentType,
+        },
       },
-      params,
-    });
-    return res;
+      params
+    );
+
+    return response.data;
   } catch (error) {
-    if (
-      error?.response?.data?.error?.message ==
-      "An internal error occurred during your request!"
-    ) {
-      errorToast("حدث خطأ،يرجى التحدث للدعم الفنى");
-      return;
-    }
-    if (error?.response?.status == 400) {
-      errorToast(error?.response?.data?.error?.details);
-      return;
-    }
-    if (error?.response?.status == 403) {
-      errorToast("حدث خطا!");
-      return;
-    }
-    if (defaultErrorMessage) {
-      errorToast(error?.response?.data?.error?.message);
-      return;
-    }
-    return error;
+    throw new Error(error);
   }
 };
 
 export const axiosDeleteRequest = async (
   api,
   params,
-  contentType = "application/json",
-  defaultErrorMessage = true
+  contentType = "application/json"
 ) => {
   try {
-    const { data: res } = await apiRequest.delete(`${baseUrl}/${api}`, {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("No token found."); // Throw an error if token is missing
+    }
+
+    const response = await apiRequest.delete(`${baseUrl}/${api}`, {
       headers: {
-        token: `${localStorage.getItem("token")}`,
+        token,
         "Content-Type": contentType,
       },
       params,
     });
-    return res;
+
+    return response.data;
   } catch (error) {
-    if (
-      error?.response?.data?.error?.message ==
-      "An internal error occurred during your request!"
-    ) {
-      errorToast("حدث خطأ،يرجى التحدث للدعم الفنى");
-      return;
-    }
-    if (error?.response?.status == 400) {
-      errorToast(error?.response?.data?.error?.details);
-      return;
-    }
-    if (error?.response?.status == 403) {
-      errorToast("حدث خطا!");
-      return;
-    }
-    if (defaultErrorMessage) {
-      errorToast(error?.response?.data?.error?.message);
-      return;
-    }
-    return error;
+    throw error.response.data.err;
   }
 };

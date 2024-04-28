@@ -51,8 +51,8 @@ function ProductCategory() {
       successToast("تم حذف نوع المنتج بنجاح"); // Invalidate products query to trigger refetch
     },
 
-    onError: (err) => {
-      errorToast(err);
+    onError: (error) => {
+      errorToast(error);
     },
   });
 
