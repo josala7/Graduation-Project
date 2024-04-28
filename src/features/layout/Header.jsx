@@ -9,9 +9,13 @@ import {
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { apiLogout } from "../../services/apiAuth";
 import { useNavigate } from "react-router-dom";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 function Header() {
   const navigate = useNavigate();
+
+  const { currentUser, isLoading } = useCurrentUser();
+
   const logout = () => {
     apiLogout();
     navigate("/login");
@@ -26,12 +30,17 @@ function Header() {
     >
       <Stack direction={"row"} gap={2}>
         <IconButton sx={{ p: 0 }}>
-          <Avatar alt="Mahmoud" src="/static/images/avatar/2.jpg" />
+          <Avatar
+            alt={currentUser?.name?.toUpperCase()}
+            src="/static/images/avatar/2.jpg"
+          />
         </IconButton>
 
         <Stack>
-          <Typography variant="body2">Admin</Typography>
-          <Typography variant="body2">admin@gmail.com</Typography>
+          <Typography variant="body2" fontWeight={"600"}>
+            {currentUser?.name}
+          </Typography>
+          <Typography variant="body2">{currentUser?.email}</Typography>
         </Stack>
       </Stack>
 
