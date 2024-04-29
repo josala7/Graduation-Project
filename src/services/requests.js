@@ -5,8 +5,7 @@ export const baseUrl = "https://aegina.onrender.com/api/v1";
 export const axiosGetRequest = async (
   api,
   params,
-  contentType = "application/json",
-  defaultErrorMessage = true
+  contentType = "application/json"
 ) => {
   try {
     const { data } = await apiRequest.get(`${baseUrl}/${api}`, {
@@ -54,8 +53,7 @@ export const axiosPutRequest = async (
   api,
   data,
   params,
-  contentType = "application/json",
-  defaultErrorMessage = true
+  contentType = "application/json"
 ) => {
   // try {
   //   const { data: res } = await apiRequest.put(`${baseUrl}/${api}`, data, {
@@ -93,12 +91,12 @@ export const axiosPutRequest = async (
 
     if (!token) throw new Error("هذا المستخدم لم يقم بتسجيل الدخول");
 
-    const response = await apiRequest.delete(
+    const response = await apiRequest.put(
       `${baseUrl}/${api}`,
       data,
       {
         headers: {
-          token: token,
+          token: `${localStorage.getItem("token")}`,
           "Content-Type": contentType,
         },
       },

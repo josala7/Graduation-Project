@@ -129,7 +129,9 @@ function ProductBrand() {
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
                   const formData = new FormData();
-                  formData.append("title", values.title);
+                  if (values.title !== row.title) {
+                    formData.append("title", values.title);
+                  }
                   formData.append("category", values.category);
                   if (values.image !== row.logo) {
                     formData.append("image", values.image);
