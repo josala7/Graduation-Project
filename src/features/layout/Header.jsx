@@ -9,16 +9,15 @@ import {
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { apiLogout } from "../../services/apiAuth";
 import { useNavigate } from "react-router-dom";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { useCurrentUserContext } from "../../context/CurrentUserContext";
 
 function Header() {
+  const { currentUser } = useCurrentUserContext();
   const navigate = useNavigate();
-
-  const { currentUser, isLoading } = useCurrentUser();
 
   const logout = () => {
     apiLogout();
-    navigate("/login");
+    navigate("/welcomInLink");
   };
   return (
     <Stack
@@ -28,8 +27,19 @@ function Header() {
       borderRadius={5}
       mb={4}
     >
-      <Stack direction={"row"} gap={2}>
-        <IconButton sx={{ p: 0 }}>
+      <Stack
+        direction={"row"}
+        gap={2}
+        onClick={() => navigate("/profilePage", { state: currentUser })}
+      >
+        <IconButton
+          sx={{
+            p: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Avatar
             alt={currentUser?.name?.toUpperCase()}
             src="/static/images/avatar/2.jpg"

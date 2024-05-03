@@ -15,7 +15,7 @@ function ProtectedRoute({ children }) {
   useEffect(
     function () {
       if (!isAuth) {
-        navigate("/login", { replace: true });
+        navigate("/welcomInLink", { replace: true });
       }
     },
     [isAuth, navigate]

@@ -13,13 +13,18 @@ import ProductDetails from "./features/products/ProductDetails";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductSettings from "./features/pages/ProductSettings";
+import WelcomInLink from "./features/pages/WelcomInLink";
+import { CurrentUserProvider } from "./context/CurrentUserContext";
+import UserProfilePage from "./features/user/UserProfilePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <ProtectedRoute>
-        <AppLayout />
+        <CurrentUserProvider>
+          <AppLayout />
+        </CurrentUserProvider>
       </ProtectedRoute>
     ),
     children: [
@@ -44,7 +49,16 @@ const router = createBrowserRouter([
         path: "products/:productId",
         element: <ProductDetails />,
       },
+
+      {
+        path: "/profilePage",
+        element: <UserProfilePage />,
+      },
     ],
+  },
+  {
+    path: "/welcomInLink",
+    element: <WelcomInLink />,
   },
   {
     path: "/login",

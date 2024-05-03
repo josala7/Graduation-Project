@@ -38,11 +38,9 @@ function Login() {
       queryClient.setQueryData(["user"]);
     },
     onError: (err) => {
-      errorToast(err.response.data.err);
+      errorToast(err);
     },
   });
-
-  console.log(isLoading, "isLoadingisLoading");
 
   const onSubmit = async (values) => {
     try {

@@ -21,6 +21,8 @@ import EditIcon from "../../components/EditIcon";
 import { useState } from "react";
 import FileInput from "../../components/ui/form-elements/FileUpload";
 import AddEditModal from "./AddEditModal";
+import AppPagination from "../../components/ui/AppPagination";
+import { useCurrentUserContext } from "../../context/CurrentUserContext";
 
 const initialValues = {
   title: "",
@@ -33,11 +35,19 @@ const validationSchema = Yup.object({
 });
 
 function ProductCategory() {
+  const { currentUser } = useCurrentUserContext();
+
+  const [page, setPage] = useState(1);
+
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
-    queryKey: ["ProductsCategories"],
-    queryFn: getAllProductsCategory,
+    queryKey: ["ProductsCategories", page, currentUser?._id],
+    queryFn: () =>
+      getAllProductsCategory({
+        createdBy: currentUser?._id,
+        page: page,
+      }),
   });
 
   const {
@@ -163,6 +173,9 @@ function ProductCategory() {
     }
   };
 
+  const totalProducts = data?.totalCount;
+  const numOfPages = Math.ceil(totalProducts / 6);
+
   return (
     <div>
       <Box display={"flex"} justifyContent={"end"} mb={2}>
@@ -183,9 +196,11 @@ function ProductCategory() {
       </Box>
       <AppTable
         columns={columns}
-        data={data?.categories || []}
+        data={data?.allCategories || []}
         isLoading={isLoading}
       />
+
+      <AppPagination page={page} setPage={setPage} numOfPages={numOfPages} />
     </div>
   );
 }

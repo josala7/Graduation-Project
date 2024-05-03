@@ -6,6 +6,7 @@ import AppButton from "../../components/ui/AppButton";
 import { Stack } from "@mui/material";
 import { getAllProductsCategory } from "../../services/apiProductsCategory";
 import { useQuery } from "@tanstack/react-query";
+import { useCurrentUserContext } from "../../context/CurrentUserContext";
 
 function AddEditModal({
   initialValues,
@@ -14,12 +15,17 @@ function AddEditModal({
   isLoading,
   btnLabel,
 }) {
+  const { currentUser } = useCurrentUserContext();
+
   const { data, isLoading: isGettingCategories } = useQuery({
-    queryKey: ["ProductsCategories"],
-    queryFn: getAllProductsCategory,
+    queryKey: ["ProductsCategories", currentUser?._id],
+    queryFn: () =>
+      getAllProductsCategory({
+        createdBy: currentUser?._id,
+      }),
   });
 
-  const options = data?.categories.map((option) => {
+  const options = data?.allCategories.map((option) => {
     return {
       label: option.title,
       value: option._id,

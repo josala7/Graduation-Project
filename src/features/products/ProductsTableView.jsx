@@ -9,10 +9,12 @@ import { errorToast, successToast } from "../../utils/toastUtils";
 import { deleteProductApi, updateProductApi } from "../../services/apiProducts";
 import { useNavigate } from "react-router-dom";
 import ShowIcon from "../../components/ShowIcon";
+import { useCurrentUserContext } from "../../context/CurrentUserContext";
 
 function ProductsTableView({ products, isLoading, validationSchema }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { currentUser } = useCurrentUserContext();
 
   const {
     mutate: deleteProduct,
@@ -79,7 +81,7 @@ function ProductsTableView({ products, isLoading, validationSchema }) {
       center: true,
     },
 
-    {
+    currentUser?.role === "company" && {
       name: "الاجراءات",
       center: true,
       cell: (row) => (
@@ -132,7 +134,17 @@ function ProductsTableView({ products, isLoading, validationSchema }) {
         </Stack>
       ),
     },
-  ];
+
+    currentUser?.role === "wholesaler" && {
+      name: "طلب",
+      center: true,
+      cell: (row) => (
+        <Stack direction={"row"} gap={2}>
+          {row.createdBy}
+        </Stack>
+      ),
+    },
+  ].filter(Boolean);
 
   return (
     <AppTable columns={columns} data={products || []} isLoading={isLoading} />

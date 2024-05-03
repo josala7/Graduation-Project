@@ -1,4 +1,4 @@
-import { Box, Pagination, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import AppBreadcrumps from "../../components/ui/AppBreadcrumps";
 import { BsBoxSeamFill } from "react-icons/bs";
 import { createProduct, getAllProducts } from "../../services/apiProducts";
@@ -11,6 +11,8 @@ import { errorToast, successToast } from "../../utils/toastUtils";
 import TableCardSwitch from "../../components/ui/TableCardSwitch";
 import ProductsCardView from "../products/ProductsCardView";
 import ProductsTableView from "../products/ProductsTableView";
+import AppPagination from "../../components/ui/AppPagination";
+import { useCurrentUserContext } from "../../context/CurrentUserContext";
 
 const breadcrumbs = [
   <Typography
@@ -48,14 +50,16 @@ const validationSchema = Yup.object({
 });
 
 function Products() {
+  const { currentUser } = useCurrentUserContext();
   const [addProductModal, setAddProductModal] = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [page, setPage] = useState(1);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["products", page],
+    queryKey: ["products", page, currentUser?._id],
     queryFn: () =>
       getAllProducts({
+        createdBy: currentUser?.role === "company" ? currentUser?._id : null,
         page: page,
       }),
   });
@@ -104,7 +108,7 @@ function Products() {
     <Stack spacing={2}>
       <AppBreadcrumps
         breadcrumbs={breadcrumbs}
-        addButton
+        addButton={currentUser?.role === "company"}
         onAddButtonClick={() => setAddProductModal(true)}
       />
 
@@ -112,36 +116,29 @@ function Products() {
         <TableCardSwitch setShowTable={setShowTable} showTable={showTable} />
       </Stack>
 
-      {showTable ? (
-        <ProductsTableView
-          products={data?.allProducts}
-          isLoading={isLoading}
-          validationSchema={validationSchema}
-        />
+      {!data?.allProducts?.length ? (
+        <div>No data</div>
       ) : (
-        <ProductsCardView products={data?.allProducts} isLoading={isLoading} />
+        <>
+          {showTable ? (
+            <ProductsTableView
+              products={data?.allProducts}
+              isLoading={isLoading}
+              validationSchema={validationSchema}
+            />
+          ) : (
+            <ProductsCardView
+              products={data?.allProducts}
+              isLoading={isLoading}
+            />
+          )}
+          <AppPagination
+            page={page}
+            setPage={setPage}
+            numOfPages={numOfPages}
+          />
+        </>
       )}
-
-      <Box
-        mt={5}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
-        <Pagination
-          variant="text"
-          shape="rounded"
-          size={"medium"}
-          color="primary"
-          showFirstButton
-          showLastButton
-          page={page}
-          onChange={(e, page) => {
-            setPage(page);
-          }}
-          count={numOfPages}
-        />
-      </Box>
 
       <AppModal
         isSuccess={isAddingSuccess}

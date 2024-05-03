@@ -11,5 +11,5 @@ export const useCurrentUser = () => {
 
   if (!token) return null;
 
-  return { currentUser: data?.user, isLoading };
+  return { currentUser: data?.currentuser, isLoading };
 };

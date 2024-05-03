@@ -7,43 +7,45 @@ import { NavLink } from "react-router-dom";
 import { appStyle } from "../../../styleConfig";
 import { FaCaretDown } from "react-icons/fa";
 import React, { useState } from "react";
-
-const MenuItem = [
-  {
-    label: "الصفحة الرئيسية",
-    url: "/",
-    icon: <MdHome fontSize={"20px"} />,
-  },
-  {
-    label: "المنتجات",
-    url: "/products",
-    icon: <BsBoxSeamFill fontSize={"18px"} />,
-  },
-  {
-    label: "الموزعون",
-    url: "/distributors",
-    icon: <FaUserCheck fontSize={"20px"} />,
-  },
-  {
-    label: "الطلبات",
-    url: "/orders",
-    icon: <MdProductionQuantityLimits fontSize={"20px"} />,
-  },
-  {
-    label: "الاٍعدادات",
-    url: "/settings/products",
-    icon: <IoSettingsSharp fontSize={"20px"} />,
-    children: [
-      {
-        label: "اٍعدادات المنتجات",
-        url: "/settings/products",
-        icon: <IoSettingsSharp fontSize={"20px"} />,
-      },
-    ],
-  },
-];
+import { useCurrentUserContext } from "../../context/CurrentUserContext";
 
 function SideMenu() {
+  const { currentUser } = useCurrentUserContext();
+  const MenuItem = [
+    {
+      label: "الصفحة الرئيسية",
+      url: "/",
+      icon: <MdHome fontSize={"20px"} />,
+    },
+    {
+      label: "المنتجات",
+      url: "/products",
+      icon: <BsBoxSeamFill fontSize={"18px"} />,
+    },
+    currentUser?.role === "company" && {
+      label: "الموزعون",
+      url: "/distributors",
+      icon: <FaUserCheck fontSize={"20px"} />,
+    },
+    {
+      label: "الطلبات",
+      url: "/orders",
+      icon: <MdProductionQuantityLimits fontSize={"20px"} />,
+    },
+    currentUser?.role === "company" && {
+      label: "الاٍعدادات",
+      url: "/settings/products",
+      icon: <IoSettingsSharp fontSize={"20px"} />,
+      children: [
+        {
+          label: "اٍعدادات المنتجات",
+          url: "/settings/products",
+          icon: <IoSettingsSharp fontSize={"20px"} />,
+        },
+      ],
+    },
+  ].filter(Boolean);
+
   const [showSubMenuIndex, setShowSubMenuIndex] = useState(null);
 
   const toggleSubMenu = (index) => {
@@ -80,7 +82,7 @@ function SideMenu() {
         }}
       >
         {MenuItem.map((item, index) => (
-          <React.Fragment key={index}>
+          <React.Fragment key={item.label}>
             <ListItem
               component={NavLink}
               to={item.url}

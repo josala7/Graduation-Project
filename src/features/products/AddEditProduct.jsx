@@ -7,6 +7,7 @@ import { Stack } from "@mui/material";
 import { getAllProductsCategory } from "../../services/apiProductsCategory";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProductsBrand } from "../../services/apiProductBrand";
+import { useCurrentUserContext } from "../../context/CurrentUserContext";
 
 function AddEditProduct({
   initialValues,
@@ -15,13 +16,17 @@ function AddEditProduct({
   isLoading,
   btnLabel = "اٍنشاء منتج",
 }) {
+  const { currentUser } = useCurrentUserContext();
   // getAllCategories
   const { data, isLoading: isGettingCatrgories } = useQuery({
-    queryKey: ["ProductsCategories"],
-    queryFn: getAllProductsCategory,
+    queryKey: ["ProductsCategories", currentUser?._id],
+    queryFn: () =>
+      getAllProductsCategory({
+        createdBy: currentUser?._id,
+      }),
   });
 
-  const categoriesOptions = data?.categories.map((option) => {
+  const categoriesOptions = data?.allCategories?.map((option) => {
     return {
       label: option.title,
       value: option._id,
@@ -30,11 +35,14 @@ function AddEditProduct({
 
   // getAllBrands
   const { data: brandsData, isLoading: isGettingBrands } = useQuery({
-    queryKey: ["ProductsBrands"],
-    queryFn: getAllProductsBrand,
+    queryKey: ["ProductsBrands", currentUser?._id],
+    queryFn: () =>
+      getAllProductsBrand({
+        createdBy: currentUser?._id,
+      }),
   });
 
-  const brandOptions = brandsData?.allBrands.map((option) => {
+  const brandOptions = brandsData?.allBrands?.map((option) => {
     return {
       label: option.title,
       value: option._id,

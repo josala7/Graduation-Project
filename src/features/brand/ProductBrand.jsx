@@ -15,6 +15,9 @@ import AddItemButton from "../../components/ui/AddItemButton";
 import * as Yup from "yup";
 import EditIcon from "../../components/EditIcon";
 import AddEditModal from "./AddEditModal";
+import { useState } from "react";
+import AppPagination from "../../components/ui/AppPagination";
+import { useCurrentUserContext } from "../../context/CurrentUserContext";
 
 const initialValues = {
   title: "",
@@ -29,11 +32,18 @@ const validationSchema = Yup.object({
 });
 
 function ProductBrand() {
+  const { currentUser } = useCurrentUserContext();
+  const [page, setPage] = useState(1);
+
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
-    queryKey: ["ProductsBrand"],
-    queryFn: getAllProductsBrand,
+    queryKey: ["ProductsBrand", page, currentUser?._id],
+    queryFn: () =>
+      getAllProductsBrand({
+        createdBy: currentUser?._id,
+        page: page,
+      }),
   });
 
   const {
@@ -160,6 +170,9 @@ function ProductBrand() {
     addBrand(formData);
   };
 
+  const totalProducts = data?.totalCount;
+  const numOfPages = Math.ceil(totalProducts / 6);
+
   return (
     <div>
       <Box display={"flex"} justifyContent={"end"} mb={2}>
@@ -183,6 +196,7 @@ function ProductBrand() {
         data={data?.allBrands || []}
         isLoading={isLoading}
       />
+      <AppPagination page={page} setPage={setPage} numOfPages={numOfPages} />
     </div>
   );
 }

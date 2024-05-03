@@ -6,8 +6,8 @@ import {
   axiosPutRequest,
 } from "./requests";
 
-export const getAllProductsCategory = async () => {
-  const res = await axiosGetRequest("categories");
+export const getAllProductsCategory = async (param) => {
+  const res = await axiosGetRequest("categories", param);
   return res;
 };
 
