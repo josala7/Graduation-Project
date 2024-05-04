@@ -3,16 +3,19 @@ import AppLayout from "./features/layout/AppLayout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ErrorFallback from "./components/ui/ErrorFallback";
 import { CssBaseline } from "@mui/material";
-import Products from "./features/pages/Products";
 import Login from "./features/auth/Login";
 import Signup from "./features/auth/Signup";
+
+import MainPage from "./features/pages/MainPage";
+import Products from "./features/pages/Products";
 import Distributors from "./features/pages/Distributors";
+import ProductSettings from "./features/pages/ProductSettings";
 import Orders from "./features/pages/Orders";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProductDetails from "./features/products/ProductDetails";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProductSettings from "./features/pages/ProductSettings";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +26,10 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
+      {
+        path: "/",
+        element: <MainPage />,
+      },
       {
         path: "products",
         element: <Products />,
