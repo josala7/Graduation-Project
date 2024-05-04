@@ -56,7 +56,7 @@ function ProductsTableView({ products, isLoading, validationSchema }) {
       name: "صورة المنتج",
       selector: (row) => row.image,
 
-      width: "200px",
+      width: "100px",
       cell: (row) => (
         <Avatar
           src={row.imageCover}
@@ -70,16 +70,29 @@ function ProductsTableView({ products, isLoading, validationSchema }) {
       name: "اسم المنتج",
       selector: (row) => row.title,
       width: "200px",
+      center: true,
     },
     {
       name: "سعر المنتج",
       selector: (row) => row.price,
       center: true,
+      width: "100px",
       cell: (row) => <div>{`${row.price}$`}</div>,
     },
     {
       name: "الكمية",
       selector: (row) => row.quantity,
+      center: true,
+      width: "100px",
+    },
+    {
+      name: "نوع المنتج",
+      selector: (row) => row?.category?.title,
+      center: true,
+    },
+    {
+      name: "البراند",
+      selector: (row) => row?.brand?.title,
       center: true,
     },
 
@@ -108,8 +121,8 @@ function ProductsTableView({ products, isLoading, validationSchema }) {
                   price: row.price,
                   quantity: row.quantity,
                   imageCover: row.imageCover,
-                  brand: row.brand,
-                  category: row.category,
+                  brand: row?.brand?._id,
+                  category: row?.category?._id,
 
                   subCategory: row.subCategory,
                 }}
