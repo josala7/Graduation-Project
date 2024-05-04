@@ -116,29 +116,16 @@ function Products() {
         <TableCardSwitch setShowTable={setShowTable} showTable={showTable} />
       </Stack>
 
-      {!data?.allProducts?.length ? (
-        <div>No data</div>
+      {showTable ? (
+        <ProductsTableView
+          products={data?.allProducts}
+          isLoading={isLoading}
+          validationSchema={validationSchema}
+        />
       ) : (
-        <>
-          {showTable ? (
-            <ProductsTableView
-              products={data?.allProducts}
-              isLoading={isLoading}
-              validationSchema={validationSchema}
-            />
-          ) : (
-            <ProductsCardView
-              products={data?.allProducts}
-              isLoading={isLoading}
-            />
-          )}
-          <AppPagination
-            page={page}
-            setPage={setPage}
-            numOfPages={numOfPages}
-          />
-        </>
+        <ProductsCardView products={data?.allProducts} isLoading={isLoading} />
       )}
+      <AppPagination page={page} setPage={setPage} numOfPages={numOfPages} />
 
       <AppModal
         isSuccess={isAddingSuccess}

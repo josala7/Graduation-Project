@@ -16,6 +16,8 @@ function ProductsTableView({ products, isLoading, validationSchema }) {
   const navigate = useNavigate();
   const { currentUser } = useCurrentUserContext();
 
+  console.log(currentUser, "currentUsercurrentUser");
+
   const {
     mutate: deleteProduct,
     isPending: isDeleting,
@@ -136,11 +138,11 @@ function ProductsTableView({ products, isLoading, validationSchema }) {
     },
 
     currentUser?.role === "wholesaler" && {
-      name: "طلب",
+      name: "اسم الشكركة",
       center: true,
       cell: (row) => (
         <Stack direction={"row"} gap={2}>
-          {row.createdBy}
+          {row?.createdBy?.name || "-"}
         </Stack>
       ),
     },
