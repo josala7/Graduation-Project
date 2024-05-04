@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import AppBreadcrumps from "../../components/ui/AppBreadcrumps";
 import { IoSettingsSharp } from "react-icons/io5";
 import AppTabs from "../../components/ui/AppTabs";
-import { BiCategory } from "react-icons/bi";
+// import { BiCategory } from "react-icons/bi";
 import ProductCategory from "../category/ProductCategory";
 import ProductBrand from "../brand/ProductBrand";
 function ProductSettings() {

@@ -8,28 +8,30 @@ const ProductText = ({ keyString, value, full, dir = "row" }) => {
       gap={dir === "column" ? 1 : 6}
       gridColumn={full ? { xs: "1", md: "1 / -1" } : ""}
     >
-      <Typography
-        fontSize={"inherit"}
-        sx={{
-          color: "#2a2069",
-          fontWeight: "bold",
-          whiteSpace: "nowrap",
-          width: { xs: "80px", md: "220px" },
-          maxWidth:
-            dir === "column" || full ? "100%" : { xs: "80px", md: "220px" },
-        }}
-      >
-        {keyString}
-      </Typography>
+      <div style={{}}>
+        <Typography
+          fontSize={"inherit"}
+          sx={{
+            color: "#2a2069",
+            fontWeight: "bold",
+            whiteSpace: "nowrap",
+            width: { xs: "60px", md: "200px" },
+            maxWidth:
+              dir === "column" || full ? "100%" : { xs: "80px", md: "220px" },
+          }}
+        >
+          {keyString}
+        </Typography>
 
-      <Typography
-        fontSize={"inherit"}
-        sx={{ color: "#808080aa", fontWeight: "600" }}
-        flexWrap={"wrap"}
-        display={"flex"}
-      >
-        {value}
-      </Typography>
+        <Typography
+          fontSize={"inherit"}
+          sx={{ color: "black", fontWeight: "900" }}
+          flexWrap={"wrap"}
+          display={"flex"}
+        >
+          {value}
+        </Typography>
+      </div>
     </Stack>
   );
 };

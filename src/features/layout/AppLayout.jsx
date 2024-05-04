@@ -23,6 +23,7 @@ function AppLayout() {
           }}
         >
           <Header />
+
           <Outlet />
         </Box>
       </Box>
