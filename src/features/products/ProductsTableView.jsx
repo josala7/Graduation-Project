@@ -138,7 +138,7 @@ function ProductsTableView({ products, isLoading, validationSchema }) {
     },
 
     currentUser?.role === "wholesaler" && {
-      name: "اسم الشكركة",
+      name: "اسم الشركة",
       center: true,
       cell: (row) => (
         <Stack direction={"row"} gap={2}>
