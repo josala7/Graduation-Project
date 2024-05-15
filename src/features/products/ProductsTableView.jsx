@@ -16,8 +16,6 @@ function ProductsTableView({ products, isLoading, validationSchema }) {
   const navigate = useNavigate();
   const { currentUser } = useCurrentUserContext();
 
-  console.log(currentUser, "currentUsercurrentUser");
-
   const {
     mutate: deleteProduct,
     isPending: isDeleting,

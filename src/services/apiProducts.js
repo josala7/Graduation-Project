@@ -2,6 +2,7 @@ import {
   axiosDeleteRequest,
   axiosGetRequest,
   axiosPostRequest,
+  axiosPutRequest,
 } from "./requests";
 
 export const getAllProducts = async (param) => {
@@ -22,7 +23,7 @@ export const createProduct = async (body) => {
   return res;
 };
 export const updateProductApi = async ({ id, body }) => {
-  const res = await axiosGetRequest(
+  const res = await axiosPutRequest(
     `product/${id}`,
     body,
     null,
