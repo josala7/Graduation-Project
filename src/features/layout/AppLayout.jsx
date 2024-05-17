@@ -1,34 +1,16 @@
-import { Outlet } from "react-router-dom";
-import SideMenu from "./SideMenu";
-import { Box } from "@mui/material";
-import { appStyle } from "../../../styleConfig";
-import Header from "./Header";
+import { useCurrentUserContext } from "../../context/CurrentUserContext";
+import CompanyLayout from "./CompanyLayout";
+import TraderLayout from "./TraderLayout";
 
 function AppLayout() {
-  return (
-    <Box display={"flex"}>
-      <SideMenu />
-      <Box
-        sx={{ width: "100%", mr: "235px", bgcolor: appStyle.mainColor }}
-        overflow={"hidden"}
-      >
-        <Box
-          sx={{
-            // overflowY: "auto",
-            bgcolor: "white",
-            m: "15px",
-            padding: "25px",
-            borderRadius: 5,
-            minHeight: "calc(100dvh - 30px)",
-          }}
-        >
-          <Header />
+  const { currentUser } = useCurrentUserContext();
 
-          <Outlet />
-        </Box>
-      </Box>
-    </Box>
-  );
+  const renderdLayout = {
+    company: <CompanyLayout />,
+    wholesaler: <TraderLayout />,
+  };
+
+  return <>{renderdLayout[currentUser?.role]}</>;
 }
 
 export default AppLayout;

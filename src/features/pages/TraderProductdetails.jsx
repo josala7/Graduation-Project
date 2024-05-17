@@ -1,65 +1,18 @@
-// import function to register Swiper custom elements
 import { register } from "swiper/element/bundle";
-
-// import Products from "../pages/Products";
 import { useNavigate } from "react-router-dom";
 register();
-
-import {
-  Button,
-  // Button,
-  // CardActions,
-  Card,
-  CardContent,
-  CardMedia,
-  Stack,
-  Typography,
-} from "@mui/material";
-import AppBreadcrumps from "../../components/ui/AppBreadcrumps";
-import { BsBoxSeamFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Button, Card, CardContent, CardMedia, Stack } from "@mui/material";
+// import AppBreadcrumps from "../../components/ui/AppBreadcrumps";
+// import { BsBoxSeamFill } from "react-icons/bs";
+// import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import ProductText from "../../components/ui/ProductText";
 import { useState } from "react";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import { deleteProductApi } from "../../services/apiProducts";
-// import { errorToast, successToast } from "../../utils/toastUtils";
-// import DeleteIcon from "../../components/DeleteIcon";
 
-function ProductDetails() {
+function TraderProductdetails() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const breadcrumbs = [
-    <Typography
-      component={Link}
-      to={"/products"}
-      key="1"
-      color="text.primary"
-      sx={{
-        textDecoration: "none",
-        fontSize: "18px",
-        display: "flex",
-        alignItems: "center",
-        gap: 1,
-      }}
-    >
-      <BsBoxSeamFill fontSize={"17px"} />
-      المنتجات
-    </Typography>,
-    <Typography
-      key="1"
-      color="text.primary"
-      sx={{
-        fontSize: "18px",
-        display: "flex",
-        alignItems: "center",
-        gap: 1,
-      }}
-    >
-      {state?.title}
-    </Typography>,
-  ];
   const imgStyle = {
     // width: "450px",
     width: "331px",
@@ -87,7 +40,7 @@ function ProductDetails() {
   };
   return (
     <Stack spacing={4} display={"flex"}>
-      <AppBreadcrumps breadcrumbs={breadcrumbs} />
+      {/* <AppBreadcrumps breadcrumbs={breadcrumbs} /> */}
 
       <Card
         sx={{
@@ -209,30 +162,9 @@ function ProductDetails() {
                 alt={state?.images[desiredIndex]}
               />
             ))}
-        {/* <CardActions
-          sx={{
-            gap: 5,
-            width: "50%",
-          }}
-        >
-          <Button
-            variant="contained"
-            color="warning"
-            size="large"
-            sx={{ width: "100%" }}
-          >
-            تعديل
-          </Button>
-
-          <DeleteIcon
-            isSuccess={isDeletingSuccess}
-            isDeleting={isDeleting}
-            onDelete={() => deleteProduct(state?._id)}
-          />
-        </CardActions> */}
       </Card>
     </Stack>
   );
 }
 
-export default ProductDetails;
+export default TraderProductdetails;

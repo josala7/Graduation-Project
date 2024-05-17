@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { apiLogin } from "../../services/apiAuth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 import { errorToast } from "../../utils/toastUtils";
 
@@ -33,8 +34,14 @@ function Login() {
 
   const { mutate: login, isPending: isLoading } = useMutation({
     mutationFn: (body) => apiLogin(body),
-    onSuccess: () => {
-      navigate("/");
+    onSuccess: (data) => {
+      const currentUser = jwtDecode(data?.token);
+      if (currentUser?.role === "company") {
+        navigate("/companyDashboard");
+      } else {
+        navigate("/traderDashboard");
+      }
+
       queryClient.setQueryData(["user"]);
     },
     onError: (err) => {
@@ -45,6 +52,7 @@ function Login() {
   const onSubmit = async (values) => {
     try {
       login(values);
+      // console.log(values, "valuesvaluesvalues");
     } catch (error) {
       console.error(error);
     }

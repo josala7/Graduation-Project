@@ -44,7 +44,7 @@ function DistributorSignup() {
   const { mutate: signUp, isPending: isLoading } = useMutation({
     mutationFn: (body) => apiSignUp(body),
     onSuccess: () => {
-      navigate("/");
+      navigate("/traderDashboard");
       queryClient.setQueryData(["user"]);
     },
     onError: (err) => {

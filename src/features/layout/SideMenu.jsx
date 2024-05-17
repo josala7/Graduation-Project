@@ -14,7 +14,7 @@ function SideMenu() {
   const MenuItem = [
     {
       label: "الصفحة الرئيسية",
-      url: "/",
+      url: "/companyDashboard",
       icon: <MdHome fontSize={"20px"} />,
     },
     {

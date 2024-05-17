@@ -19,6 +19,7 @@ function Signup() {
   });
 
   const [step, setStep] = useState(1);
+
   const next = () => setStep((prev) => prev + 1);
   const back = () => setStep((prev) => prev - 1);
 
