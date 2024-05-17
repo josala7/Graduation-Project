@@ -2,6 +2,7 @@
 import { Card, CardMedia, Stack, Typography } from "@mui/material";
 import AppButton from "./AppButton";
 import { useNavigate } from "react-router-dom";
+// import { AddCircle, FavoriteBorder } from "@mui/icons-material";
 
 function AppCard({ item }) {
   const { _id: productId, title, price, imageCover } = item;
@@ -25,6 +26,24 @@ function AppCard({ item }) {
         height="250"
         image={imageCover}
       />
+      {/* <Box sx={{ display: "flex" }}>
+        <FavoriteBorder
+          sx={{
+            position: "relative",
+            right: "0",
+            fontSize: "40px",
+            cursor: "pointer",
+          }}
+        />
+        <AddCircle
+          sx={{
+            position: "relative",
+            left: "0",
+            fontSize: "40px",
+            cursor: "pointer",
+          }}
+        />
+      </Box> */}
 
       <Stack pt={3} pb={0} flex={1}>
         <Stack spacing={2} flex={1} pb={3}>
@@ -36,6 +55,11 @@ function AppCard({ item }) {
 
           <Typography variant="body1">{price} جنيها</Typography>
         </Stack>
+
+        {/* <AppButton>اضافة الي طلباتي</AppButton> */}
+        {/* <Button sx={{ mb: 2 }} variant="contained">
+          اضافة الي طلباتي
+        </Button> */}
 
         <AppButton
           onClick={() => navigate(`/products/${productId}`, { state: item })}

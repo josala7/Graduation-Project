@@ -41,9 +41,8 @@ function SideMenu({ setMenuOpen, menuOpen }) {
   const MenuItem = [
     {
       label: "الصفحة الرئيسية",
-      url: "/",
-      icon: <FaHome fontSize={23} />,
-      children: [],
+      url: "/companyDashboard",
+      icon: <MdHome fontSize={"20px"} />,
     },
     {
       label: "المنتجات",

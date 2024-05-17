@@ -8,6 +8,7 @@ import AppButton from "../../components/ui/AppButton";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiSignUp } from "../../services/apiAuth";
 import { useNavigate } from "react-router-dom";
+import { useCurrentUserContext } from "../../context/CurrentUserContext";
 
 const initialValues = {
   phone: "",
@@ -24,11 +25,17 @@ const validationSchema = Yup.object({
 function RegistrationStep2({ next, back, setSignUpdata, signupData }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { currentUser } = useCurrentUserContext();
 
   const { mutate: signUp, isPending: isLoading } = useMutation({
     mutationFn: (body) => apiSignUp(body),
     onSuccess: () => {
-      navigate("/");
+      if (currentUser?.role === "company") {
+        navigate("/companyDashboard");
+      } else {
+        navigate("/traderDashboard");
+      }
+
       queryClient.setQueryData(["user"]);
     },
     onError: (err) => {
