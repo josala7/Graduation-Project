@@ -109,6 +109,35 @@ export const axiosPutRequest = async (
   }
 };
 
+export const axiosPatchRequest = async (
+  api,
+  data,
+  params,
+  contentType = "application/json"
+) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) throw new Error("هذا المستخدم لم يقم بتسجيل الدخول");
+
+    const response = await apiRequest.patch(
+      `${baseUrl}/${api}`,
+      data,
+      {
+        headers: {
+          token: `${localStorage.getItem("token")}`,
+          "Content-Type": contentType,
+        },
+      },
+      params
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data.err;
+  }
+};
+
 export const axiosDeleteRequest = async (
   api,
   params,

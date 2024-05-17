@@ -1,6 +1,7 @@
 import {
   axiosDeleteRequest,
   axiosGetRequest,
+  axiosPatchRequest,
   axiosPostRequest,
   axiosPutRequest,
 } from "./requests";
@@ -23,7 +24,7 @@ export const createProduct = async (body) => {
   return res;
 };
 export const updateProductApi = async ({ id, body }) => {
-  const res = await axiosPutRequest(
+  const res = await axiosPatchRequest(
     `product/${id}`,
     body,
     null,

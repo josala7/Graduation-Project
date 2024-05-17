@@ -126,7 +126,7 @@ function SideMenu({ setMenuOpen, menuOpen }) {
                 onClick={
                   menuOpen && !isLessThan600px
                     ? () => toggleSubMenu(index)
-                    : item?.children.length
+                    : item?.children?.length
                     ? handleClick
                     : null
                 }

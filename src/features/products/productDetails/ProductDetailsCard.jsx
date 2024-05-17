@@ -12,6 +12,7 @@ import AddEditProduct from "../AddEditProduct";
 import * as Yup from "yup";
 import ConfirmModal from "../../../components/ui/ConfirmModal";
 import { useNavigate } from "react-router-dom";
+import { useCurrentUser } from "../../../hooks/useCurrentUser";
 
 const validationSchema = Yup.object({
   title: Yup.string().required("لابد من اٍدخال اسم المنتج"),
@@ -25,7 +26,7 @@ function ProductDetailsCard({ item }) {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-
+  const { currentUser } = useCurrentUser();
   const {
     mutate: deleteProduct,
     isPending: isDeleting,
@@ -54,6 +55,7 @@ function ProductDetailsCard({ item }) {
     onSuccess: () => {
       queryClient.invalidateQueries(["products"]);
       successToast("تم تعديل المنتج بنجاح");
+      navigate(-1);
     },
     onError: (err) => {
       errorToast(err);
@@ -105,7 +107,7 @@ function ProductDetailsCard({ item }) {
           <Stack
             spacing={0.5}
             flexDirection={"row"}
-            justifyContent={"space-between"}
+            gap={"50px"}
             alignItems={"center"}
           >
             <Stack>
@@ -124,7 +126,7 @@ function ProductDetailsCard({ item }) {
             spacing={0.5}
             flexDirection={"row"}
             flexWrap={"wrap"}
-            justifyContent={"space-between"}
+            gap={"20px"}
             alignItems={"center"}
           >
             {item?.images?.map((ele) => (
@@ -148,21 +150,31 @@ function ProductDetailsCard({ item }) {
           </Stack>
 
           <Stack gap={2} flexDirection={"row"} alignItems={"center"}>
-            <Button
-              disabled={isDeleting}
-              onClick={() => setOpenConfirmModal(true)}
-              variant="contained"
-              color="error"
-            >
-              حذف
-            </Button>
-            <Button
-              onClick={() => setOpenEditModal(true)}
-              variant="outlined"
-              color="warning"
-            >
-              تعديل
-            </Button>
+            {currentUser?.role === "company" ? (
+              <>
+                <Button
+                  disabled={isDeleting}
+                  onClick={() => setOpenConfirmModal(true)}
+                  variant="contained"
+                  color="error"
+                >
+                  حذف
+                </Button>
+                <Button
+                  onClick={() => setOpenEditModal(true)}
+                  variant="outlined"
+                  color="warning"
+                >
+                  تعديل
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button onClick={() => {}} variant="contained" color="info">
+                  طلب اوردر
+                </Button>
+              </>
+            )}
           </Stack>
         </Stack>
 
