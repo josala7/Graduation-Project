@@ -8,7 +8,7 @@ import AppButton from "../../components/ui/AppButton";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiSignUp } from "../../services/apiAuth";
 import { useNavigate } from "react-router-dom";
-import { useCurrentUserContext } from "../../context/CurrentUserContext";
+import { jwtDecode } from "jwt-decode";
 
 const initialValues = {
   phone: "",
@@ -25,11 +25,11 @@ const validationSchema = Yup.object({
 function RegistrationStep2({ next, back, setSignUpdata, signupData }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { currentUser } = useCurrentUserContext();
 
   const { mutate: signUp, isPending: isLoading } = useMutation({
     mutationFn: (body) => apiSignUp(body),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      const currentUser = jwtDecode(data?.token);
       if (currentUser?.role === "company") {
         navigate("/companyDashboard");
       } else {
@@ -68,14 +68,14 @@ function RegistrationStep2({ next, back, setSignUpdata, signupData }) {
             isRequired
           />
 
-          {/* <InputControl
+          <InputControl
             name="taxNumber"
             label="الرقم الضريبي"
             placeholder="10255"
             type="taxNumber"
             control={"input"}
             isRequired
-          /> */}
+          />
         </Stack>
 
         <AppButton

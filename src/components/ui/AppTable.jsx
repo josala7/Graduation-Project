@@ -4,7 +4,13 @@ import DataTable from "react-data-table-component";
 import { noData } from "../../assets";
 import TableSkeleton from "../skeleton/TableSkeleton";
 
-function AppTable({ data, columns, isLoading }) {
+function AppTable({
+  data,
+  columns,
+  isLoading,
+  expandOnRowClicked,
+  expandableRowsComponent,
+}) {
   const customStyles = {
     rows: {
       style: {
@@ -44,6 +50,9 @@ function AppTable({ data, columns, isLoading }) {
           sortServer={false}
           fixedHeader
           striped={true}
+          expandableRows={expandOnRowClicked}
+          expandOnRowClicked={expandOnRowClicked}
+          expandableRowsComponent={expandableRowsComponent}
         />
       )}
     </Box>

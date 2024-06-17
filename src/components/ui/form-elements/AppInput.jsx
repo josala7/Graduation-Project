@@ -2,7 +2,7 @@
 import { useField } from "formik";
 import { TextField } from "@mui/material";
 
-const AppInput = ({ label, readOnly, ...props }) => {
+const AppInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
 
   return (
@@ -20,7 +20,7 @@ const AppInput = ({ label, readOnly, ...props }) => {
       error={meta.error}
       variant="outlined"
       InputProps={{
-        readOnly: readOnly,
+        readOnly: props.readOnly,
       }}
     />
   );

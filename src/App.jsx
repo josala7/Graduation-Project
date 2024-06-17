@@ -27,7 +27,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import WelcomInLink from "./features/pages/WelcomInLink";
 import { CurrentUserProvider } from "./context/CurrentUserContext";
-import TraderLayout from "./features/layout/TraderLayout";
+import Cart from "./features/pages/Cart";
+// import TraderLayout from "./features/layout/TraderLayout";
 // import UserProfilePage from "./features/user/UserProfilePage";
 
 const router = createBrowserRouter([
@@ -85,6 +86,14 @@ const router = createBrowserRouter([
       {
         path: "traderproductdetails",
         element: <TraderProductdetails />,
+      },
+      // {
+      //   path: "WelcomInLink",
+      //   element: <WelcomInLink />,
+      // },
+      {
+        path: "cart",
+        element: <Cart />,
       },
     ],
   },

@@ -3,7 +3,6 @@ import {
   axiosGetRequest,
   axiosPatchRequest,
   axiosPostRequest,
-  axiosPutRequest,
 } from "./requests";
 
 export const getAllProducts = async (param) => {

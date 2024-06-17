@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 // const slides = [
 //   { url: "http://localhost:3000/image-1.jpg", title: "beach" },
@@ -56,6 +56,7 @@ const dotStyle = {
 
 function Slider({ slides }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const goToPrevious = () => {
     const isFirstSlide = currentIndex === 0;
     const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
@@ -69,6 +70,11 @@ function Slider({ slides }) {
   const goToSlide = (slideIndex) => {
     setCurrentIndex(slideIndex);
   };
+  useEffect(() => {
+    const interval = setInterval(goToNext, 2000); // Change slide every 2 seconds
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [currentIndex]); // Re-run effect when currentIndex changes
+
   const slideStylesWidthBackground = {
     ...slideStyles,
     backgroundImage: `url(${slides[currentIndex].url})`,
@@ -77,10 +83,10 @@ function Slider({ slides }) {
   return (
     <div style={sliderStyles}>
       <div>
-        <div onClick={goToPrevious} style={leftArrowStyles}>
+        <div onClick={goToPrevious} style={rightArrowStyles}>
           ❰
         </div>
-        <div onClick={goToNext} style={rightArrowStyles}>
+        <div onClick={goToNext} style={leftArrowStyles}>
           ❱
         </div>
       </div>

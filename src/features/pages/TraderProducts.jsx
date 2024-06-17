@@ -32,6 +32,8 @@ const validationSchema = Yup.object({
 function TraderProducts() {
   const options = ["Apple", "Banana", "Orange", "Pineapple", "Strawberry"];
   const [SortBy, SetSortBy] = useState("");
+  const [searchValue, setSearchValue] = useState(null);
+  console.log(searchValue, "searchValuesearchValue");
   return (
     <Container>
       <div style={{ display: "flex" }}>
@@ -41,7 +43,11 @@ function TraderProducts() {
             freeSolo
             options={options}
             renderInput={(params) => (
-              <TextField label="البحث عن منتجات" {...params} />
+              <TextField
+                label="البحث عن منتجات"
+                {...params}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
             )}
           />
         </Stack>
@@ -59,24 +65,25 @@ function TraderProducts() {
         </div>
       </div>
       <div style={{ marginBottom: "20px" }}>
-        <Editproducts />
+        <Editproducts searchValue={searchValue} />
       </div>
     </Container>
   );
 }
 
-function Editproducts() {
+function Editproducts({ searchValue }) {
   const { currentUser } = useCurrentUserContext();
   // const [addProductModal, setAddProductModal] = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [page, setPage] = useState(1);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["products", page, currentUser?._id],
+    queryKey: ["products", page, currentUser?._i, searchValue],
     queryFn: () =>
       getAllProducts({
         createdBy: currentUser?.role === "company" ? currentUser?._id : null,
         page: page,
+        keyword: searchValue,
       }),
   });
 

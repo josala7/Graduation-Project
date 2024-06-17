@@ -15,12 +15,65 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 
 import { Outlet, useNavigate } from "react-router-dom";
-import { Menu } from "@mui/material";
+import {
+  Avatar,
+  ClickAwayListener,
+  Grow,
+  Menu,
+  MenuList,
+  Paper,
+  Popper,
+  Stack,
+} from "@mui/material";
 import { Favorite, ShoppingCart } from "@mui/icons-material";
 import TraderFooter from "./TraderFooter";
 import { apiLogout } from "../../services/apiAuth";
+import { logo } from "../../assets/index";
+
+// import { useControls } from "leva";
+// import { Canvas } from "@react-three/fiber";
+// import {
+//   AccumulativeShadows,
+//   RandomizedLight,
+//   OrbitControls,
+//   Environment,
+// } from "@react-three/drei";
 
 export default function TraderLayout() {
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen(false);
+    } else if (event.key === "Escape") {
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
+
   const navigate = useNavigate();
   const logout = () => {
     apiLogout();
@@ -70,7 +123,16 @@ export default function TraderLayout() {
       onClose={handleMenuClose}
       sx={{ marginTop: "50px" }}
     >
-      <MenuItem onClick={handleMenuClose}>صفحتي</MenuItem>
+      <MenuItem
+        //  onClick={handleMenuClose}
+        // onClick={() => navigate("/traderProfile")}
+        onClick={() => {
+          handleMenuClose();
+          navigate("/traderProfile");
+        }}
+      >
+        صفحتي
+      </MenuItem>
 
       <MenuItem onClick={logout}>تسجيل الخروج</MenuItem>
     </Menu>
@@ -140,164 +202,214 @@ export default function TraderLayout() {
       </MenuItem>
     </Menu>
   );
-
   return (
-    <>
-      <Box>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 4 }}
-            >
-              <MenuIcon />
-              {/* <Menu /> */}
-            </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{
-                // display: { xs: "none", sm: "block" },
-                fontSize: "25px",
-                marginRight: "10px",
-                cursor: "pointer",
-              }}
-              onClick={() => navigate("/traderDashboard")}
-            >
-              اللوجو
-            </Typography>
-            <div
-              style={{
-                display: "flex",
-                position: "relative",
-                right: "100px",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-                // ml: 9,
-              }}
-            >
-              <div>
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="div"
-                  sx={{
-                    display: { xs: "none", sm: "block" },
-                    fontSize: "20px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => navigate("/traderDashboard")}
-                >
-                  الصفحة الرئيسية
-                </Typography>
-              </div>
-              <div>
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="div"
-                  sx={{
-                    display: {
-                      xs: "none",
-                      sm: "block",
+    <Stack style={{ minHeight: "100dvh" }} justifyContent={"space-between"}>
+      <div>
+        <Box>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton
+                ref={anchorRef}
+                id="composition-button"
+                aria-controls={open ? "composition-menu" : undefined}
+                aria-expanded={open ? "true" : undefined}
+                aria-haspopup="true"
+                onClick={handleToggle}
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                sx={{ mr: 4 }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Popper
+                open={open}
+                anchorEl={anchorRef.current}
+                role={undefined}
+                placement="bottom-start"
+                transition
+                disablePortal
+              >
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{
+                      transformOrigin:
+                        placement === "bottom-start"
+                          ? "left top"
+                          : "left bottom",
+                    }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleClose}>
+                        <MenuList
+                          autoFocusItem={open}
+                          id="composition-menu"
+                          aria-labelledby="composition-button"
+                          onKeyDown={handleListKeyDown}
+                          sx={{ mt: "15px" }}
+                        >
+                          <MenuItem
+                            onClick={() => navigate("/traderDashboard")}
+                          >
+                            الصفحة الرئيسية
+                          </MenuItem>
+                          <MenuItem onClick={() => navigate("/traderProducts")}>
+                            المنتجات
+                          </MenuItem>
+                          <MenuItem onClick={() => navigate("/traderOrders")}>
+                            طلباتي
+                          </MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+              <Avatar
+                sx={{
+                  display: "block",
+                  cursor: "pointer",
+                  width: "50px", // Set a fixed width
+                  height: "50px", // Set a fixed height
+                  backgroundPosition: "cover",
+                  marginRight: "30px", // Adjust margin
+                }}
+                variant="rounded"
+                onClick={() => navigate("/traderDashboard")}
+              >
+                <img
+                  src={logo}
+                  alt="Logo"
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </Avatar>
+              <div
+                style={{
+                  display: "flex",
+                  position: "relative",
+                  right: "30%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                  // ml: 9,
+                }}
+              >
+                <div>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    sx={{
+                      display: { xs: "none", sm: "block" },
                       fontSize: "20px",
                       cursor: "pointer",
-                    },
-                  }}
-                  onClick={() => navigate("/traderProducts")}
-                >
-                  المنتجات
-                </Typography>
+                      ml: "30px",
+                    }}
+                    onClick={() => navigate("/traderDashboard")}
+                  >
+                    الصفحة الرئيسية
+                  </Typography>
+                </div>
+                <div>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    sx={{
+                      display: {
+                        xs: "none",
+                        sm: "block",
+                        fontSize: "20px",
+                        cursor: "pointer",
+                        ml: "30px",
+                      },
+                    }}
+                    onClick={() => navigate("/traderProducts")}
+                  >
+                    المنتجات
+                  </Typography>
+                </div>
+                <div>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    sx={{
+                      display: { xs: "none", sm: "block" },
+                      fontSize: "20px",
+                      cursor: "pointer",
+                      mr: "30px",
+                    }}
+                    onClick={() => navigate("/traderOrders")}
+                  >
+                    طلباتي
+                  </Typography>
+                </div>
               </div>
-              <div>
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="div"
-                  sx={{
-                    display: { xs: "none", sm: "block" },
-                    fontSize: "20px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => navigate("/traderOrders")}
+              <Box sx={{ flexGrow: 1 }} />
+              <Box
+                sx={{ display: { xs: "none", md: "flex" }, marginLeft: "20px" }}
+              >
+                <IconButton
+                  size="large"
+                  aria-label="show 4 new mails"
+                  color="inherit"
+                  sx={{ marginLeft: "20px" }}
                 >
-                  طلباتي
-                </Typography>
-              </div>
-            </div>
-            {/* <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search> */}
-            <Box sx={{ flexGrow: 1 }} />
-            <Box
-              sx={{ display: { xs: "none", md: "flex" }, marginLeft: "20px" }}
-            >
-              <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                color="inherit"
-                sx={{ marginLeft: "20px" }}
-              >
-                <Badge badgeContent={4} color="error">
-                  {/* <MailIcon /> */}
-                  <Favorite />
-                </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-                sx={{ marginLeft: "20px" }}
-              >
-                <Badge badgeContent={17} color="error">
-                  {/* <NotificationsIcon /> */}
-                  <ShoppingCart />
-                </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-                sx={{ marginLeft: "20px" }}
-              >
-                <AccountCircle />
-              </IconButton>
-            </Box>
-            <Box sx={{ display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
-            </Box>
-          </Toolbar>
-        </AppBar>
-        {renderMobileMenu}
-        {renderMenu}
-      </Box>
-
-      <Outlet />
-      <TraderFooter />
-    </>
+                  <Badge badgeContent={4} color="error">
+                    {/* <MailIcon /> */}
+                    <Favorite />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  onClick={() => navigate("/cart")}
+                  size="large"
+                  aria-label="show 17 new notifications"
+                  color="inherit"
+                  sx={{ marginLeft: "20px" }}
+                >
+                  <Badge badgeContent={17} color="error">
+                    {/* <NotificationsIcon /> */}
+                    <ShoppingCart />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                  sx={{ marginLeft: "20px" }}
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Box>
+              <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                <IconButton
+                  size="large"
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </Box>
+            </Toolbar>
+          </AppBar>
+          {renderMobileMenu}
+          {renderMenu}
+        </Box>
+        <Outlet />
+      </div>
+      <div>
+        <TraderFooter />
+      </div>
+    </Stack>
   );
 }

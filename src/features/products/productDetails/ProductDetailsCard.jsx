@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import ConfirmModal from "../../../components/ui/ConfirmModal";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
+import { useAddToCart } from "../../cart/useAddToCart";
 
 const validationSchema = Yup.object({
   title: Yup.string().required("لابد من اٍدخال اسم المنتج"),
@@ -26,6 +27,7 @@ function ProductDetailsCard({ item }) {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { addToCart, isAddingToCart } = useAddToCart();
   const { currentUser } = useCurrentUser();
   const {
     mutate: deleteProduct,
@@ -170,8 +172,21 @@ function ProductDetailsCard({ item }) {
               </>
             ) : (
               <>
-                <Button onClick={() => {}} variant="contained" color="info">
-                  طلب اوردر
+                <Button
+                  disabled={isAddingToCart}
+                  onClick={() => addToCart(item._id)}
+                  variant="contained"
+                  color="info"
+                >
+                  اضافة الي السلة
+                </Button>
+                <Button
+                  color="error"
+                  variant="contained"
+                  // sx={{ mb: "30px" }}
+                  onClick={() => navigate("/traderproducts")}
+                >
+                  الرجوع
                 </Button>
               </>
             )}

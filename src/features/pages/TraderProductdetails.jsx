@@ -39,7 +39,7 @@ function TraderProductdetails() {
     setDesiredIndex(index);
   };
   return (
-    <Stack spacing={4} display={"flex"}>
+    <Stack spacing={4} display={"flex"} py={3}>
       {/* <AppBreadcrumps breadcrumbs={breadcrumbs} /> */}
 
       <Card
