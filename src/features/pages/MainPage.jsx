@@ -111,7 +111,7 @@ function Onebox() {
           {/* <IoStorefrontShar style={iconStyle} /> */}
           <MdMonetizationOn style={iconStyle} />
         </div>
-        <div className="content">
+        <div className="content" style={{ marginTop: "20px" }}>
           <p>اجمالي السعر</p>
           <span style={{ fontWeight: "bold" }}>73500</span>
         </div>
@@ -121,9 +121,9 @@ function Onebox() {
           {/* <ShoppingCartSharpIcon style={iconStyle} /> */}
           <MdShoppingCart style={iconStyle} />
         </div>
-        <div className="content">
+        <div className="content" style={{ marginTop: "20px" }}>
           <p>اجمالي الطلبيات</p>
-          <span style={{ fontWeight: "bold" }}>700</span>
+          <span style={{ fontWeight: "bold" }}>70</span>
         </div>
       </div>
       <div className="box" style={boxStyle}>
@@ -131,9 +131,9 @@ function Onebox() {
           {/* <ShopSharpIcon style={iconStyle} /> */}
           <MdSell style={iconStyle} />
         </div>
-        <div className="content">
+        <div className="content" style={{ marginTop: "20px" }}>
           <p>اجمالي المنتجات</p>
-          <span style={{ fontWeight: "bold" }}>1000</span>
+          <span style={{ fontWeight: "bold" }}>300</span>
         </div>
       </div>
     </>
@@ -192,13 +192,18 @@ function Piechart() {
         width="30%"
         // height={360}
         aspect={1}
-        style={{ marginRight: "30px", position: "relative", bottom: "30px" }}
+        style={{
+          marginRight: "30px",
+          position: "relative",
+          bottom: "30px",
+          marginTop: "30px",
+        }}
       >
         <h3
           style={{
             zIndex: "2",
             position: "relative",
-            top: "60px",
+            top: "80px",
             right: "30px",
           }}
         >

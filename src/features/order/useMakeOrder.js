@@ -21,7 +21,7 @@ export const useMakeOrder = () => {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries(["order"]);
-      successToast("making order done!");
+      successToast("تمت عملية طلب اوردر");
       navigate("/traderOrders");
     },
     onError: (err) => {
