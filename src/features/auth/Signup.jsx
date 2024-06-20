@@ -15,7 +15,7 @@ function Signup() {
     password: "",
     rePassword: "",
     phone: "",
-    taxNumber: "",
+    // taxNumber: "",
   });
 
   const [step, setStep] = useState(1);

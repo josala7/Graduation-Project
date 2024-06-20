@@ -41,16 +41,16 @@ function Navbar() {
               justifyContent: "flex-end",
             }}
           >
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", gap: '20px' }}>
               <Button
                 variant="contained"
-                sx={{ ml: "20px" }}
                 onClick={() => navigate("/signup", { state: "company" })}
               >
                 الشركة
               </Button>
               <Button
-                sx={{ color: "white", backgroundColor: "green" }}
+               color="success"
+               variant="contained"
                 onClick={() => navigate("/signup", { state: "distributor" })}
               >
                 التاجر

@@ -6,7 +6,7 @@ export const useGetOrders = () => {
   const queryClient = useQueryClient();
   const { currentUser } = useCurrentUser();
 
-  const { data, isLoading: isGettingCartItems } = useQuery({
+  const { data, isLoading: isGettingOrders } = useQuery({
     queryKey: ["order"],
     queryFn: () =>
       axiosGetRequest(
@@ -21,6 +21,6 @@ export const useGetOrders = () => {
     orders,
 
     data,
-    isGettingCartItems,
+    isGettingOrders,
   };
 };

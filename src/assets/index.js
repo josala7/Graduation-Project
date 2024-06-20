@@ -35,6 +35,7 @@ import light from "./light.jpg";
 import cart1 from "./cart1.jpg";
 import cart2 from "./cart2.jpg";
 import nocart from "./nocart.jpg";
+import myAvatar from "./myAvatar.jpg";
 
 export {
   login,
@@ -73,5 +74,5 @@ export {
   light,
   cart1,
   cart2,
-  nocart,
+  nocart,myAvatar
 };

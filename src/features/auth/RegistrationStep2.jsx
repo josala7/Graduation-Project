@@ -68,14 +68,14 @@ function RegistrationStep2({ next, back, setSignUpdata, signupData }) {
             isRequired
           />
 
-          <InputControl
+          {/* <InputControl
             name="taxNumber"
             label="الرقم الضريبي"
             placeholder="10255"
             type="taxNumber"
             control={"input"}
             isRequired
-          />
+          /> */}
         </Stack>
 
         <AppButton
