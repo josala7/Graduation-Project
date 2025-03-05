@@ -1,9 +1,11 @@
-# React + Vite
+## Technical skills
+ #### Frontend : React.js, React Query, Styled Components, Recharts,Axios, React Hook Form.
+ #### Backend : Node.js , express.js , mongoDB , Stripe   
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Hosting
+You can access the live version of the project at the following URL:
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-"# Graduation-Project" 
+[Project-Link](https://graduation-project-inky.vercel.app/welcomInLink)
+## To login as A company :
+####  email : yousefmohamed207202@gmail.com
+####  password : P@ssw0rd
